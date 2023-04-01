@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+<!--    map layout here-->
+
+<!--    departure & destination edittext box-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_departure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:hint="From"
+            android:minHeight="48dp" />
+        <EditText
+            android:id="@+id/et_destination"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:hint="To"
+            android:minHeight="48dp" />
+
+<!--        Reverse & go btn-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <Button
+                android:id="@+id/bt_rev"
+                android:drawableRight="@drawable/swap_vert"
+                android:drawableTint="#ffffff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="right"
+                android:backgroundTint="@android:color/tertiary_text_light"
+                android:text="Swap"
+                android:textSize="12sp"/>
+
+            <Button
+                android:id="@+id/bt_go"
+                android:drawableRight="@drawable/near_me"
+                android:drawableTint="#ffffff"
+                android:layout_width="108dp"
+                android:layout_height="60dp"
+                android:layout_gravity="right"
+                android:layout_marginLeft="150dp"
+                android:layout_marginRight="10dp"
+                android:text="Go"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+                <!--android:background="@drawable/round_btn"-->
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/box_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E3E3E3"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Transit"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:typeface="normal"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <Button
+                    android:id="@+id/bt_bus"
+                    android:drawableTop="@drawable/transit_bus"
+                    android:drawableTint="#ffffff"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:text="Bus"
+                    android:textSize="12sp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/bt_mtr"
+                    android:drawableTop="@drawable/transit_subway"
+                    android:drawableTint="#ffffff"
+                    android:drawablePadding="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:text="MTR"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/bt_minibus"
+                    android:drawableTop="@drawable/transit_bus"
+                    android:drawableTint="@android:color/holo_green_light"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:singleLine="true"
+                    android:text="Minibus"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/bt_tram"
+                    android:drawableTop="@drawable/transit_tram"
+                    android:drawableTint="@android:color/holo_green_light"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:text="Tram"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <Button
+                    android:id="@+id/bt_lightrail"
+                    android:drawableTop="@drawable/transit_tram"
+                    android:drawableTint="#ffffff"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:text="Light Rail"
+                    android:singleLine="true"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/bt_ferry"
+                    android:drawableTop="@drawable/transit_ferry"
+                    android:drawableTint="#ffffff"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:text="Ferry"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/bt_uber"
+                    android:drawableTop="@drawable/transit_uber"
+                    android:drawableTint="#ffffff"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:singleLine="true"
+                    android:text="Uber"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/bt_map"
+                    android:drawableTop="@drawable/transit_map"
+                    android:drawableTint="#ffffff"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:text="Map"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
