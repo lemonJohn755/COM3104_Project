@@ -10,29 +10,55 @@
 <!--    map layout here-->
 
 <!--    departure & destination edittext box-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/et_departure"
-            android:layout_width="match_parent"
+        <TableLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:hint="From"
-            android:minHeight="48dp" />
-        <EditText
-            android:id="@+id/et_destination"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:hint="To"
-            android:minHeight="48dp" />
+            android:padding="4dp">
 
-<!--        Reverse & go btn-->
+            <TableRow>
+                <EditText
+                    android:id="@+id/et_from"
+                    android:layout_width="234dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:hint="From"/>
+                <Button
+                    android:id="@+id/bt_getLoc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/my_location"
+                    android:drawableTint="#ffffff"
+                    android:text="Loc"
+                    android:textStyle="normal" />
+            </TableRow>
+
+            <TableRow>
+
+                <EditText
+                    android:id="@+id/et_to"
+                    android:layout_width="283dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:hint="To" />
+                <Button
+                    android:id="@+id/bt_go"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/near_me"
+                    android:drawableTint="#ffffff"
+                    android:gravity="left"
+                    android:text="Go"
+                    android:textSize="20sp"
+                    android:textStyle="normal" />
+            </TableRow>
+        </TableLayout>
+
+        <!--            android:layout_marginLeft="130dp"-->
+        <!--            android:layout_marginRight="10dp"-->
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,18 +77,7 @@
                 android:text="Swap"
                 android:textSize="12sp"/>
 
-            <Button
-                android:id="@+id/bt_go"
-                android:drawableRight="@drawable/near_me"
-                android:drawableTint="#ffffff"
-                android:layout_width="108dp"
-                android:layout_height="60dp"
-                android:layout_gravity="right"
-                android:layout_marginLeft="150dp"
-                android:layout_marginRight="10dp"
-                android:text="Go"
-                android:textStyle="bold"
-                android:textSize="20sp"/>
+
                 <!--android:background="@drawable/round_btn"-->
         </LinearLayout>
 
@@ -74,126 +89,111 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <TextView
-                android:id="@+id/textview"
+            <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Transit"
-                android:textAlignment="center"
-                android:textColor="#000000"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:typeface="normal"/>
+                android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
-                <Button
-                    android:id="@+id/bt_bus"
-                    android:drawableTop="@drawable/transit_bus"
-                    android:drawableTint="#ffffff"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:text="Bus"
-                    android:textSize="12sp"
-                    android:layout_weight="1" />
+                <TableRow>
 
-                <Button
-                    android:id="@+id/bt_mtr"
-                    android:drawableTop="@drawable/transit_subway"
-                    android:drawableTint="#ffffff"
-                    android:drawablePadding="4dp"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:text="MTR"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:textSize="12sp"
-                    android:layout_weight="1"/>
-                <Button
-                    android:id="@+id/bt_minibus"
-                    android:drawableTop="@drawable/transit_bus"
-                    android:drawableTint="@android:color/holo_green_light"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:singleLine="true"
-                    android:text="Minibus"
-                    android:textSize="12sp"
-                    android:layout_weight="1"/>
-                <Button
-                    android:id="@+id/bt_tram"
-                    android:drawableTop="@drawable/transit_tram"
-                    android:drawableTint="@android:color/holo_green_light"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:text="Tram"
-                    android:textSize="12sp"
-                    android:layout_weight="1"/>
-            </LinearLayout>
+                    <Button
+                        android:id="@+id/bt_bus"
+                        android:drawableTop="@drawable/transit_bus"
+                        android:drawableTint="#ffffff"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:text="Bus"
+                        android:textSize="12sp"
+                        android:layout_weight="1" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
-                <Button
-                    android:id="@+id/bt_lightrail"
-                    android:drawableTop="@drawable/transit_tram"
-                    android:drawableTint="#ffffff"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:text="Light Rail"
-                    android:singleLine="true"
-                    android:textSize="12sp"
-                    android:layout_weight="1"/>
-                <Button
-                    android:id="@+id/bt_ferry"
-                    android:drawableTop="@drawable/transit_ferry"
-                    android:drawableTint="#ffffff"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:text="Ferry"
-                    android:textSize="12sp"
-                    android:layout_weight="1"/>
-                <Button
-                    android:id="@+id/bt_uber"
-                    android:drawableTop="@drawable/transit_uber"
-                    android:drawableTint="#ffffff"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:singleLine="true"
-                    android:text="Uber"
-                    android:textSize="12sp"
-                    android:layout_weight="1"/>
-                <Button
-                    android:id="@+id/bt_map"
-                    android:drawableTop="@drawable/transit_map"
-                    android:drawableTint="#ffffff"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:text="Map"
-                    android:textSize="12sp"
-                    android:layout_weight="1"/>
+                    <Button
+                        android:id="@+id/bt_mtr"
+                        android:drawableTop="@drawable/transit_subway"
+                        android:drawableTint="#ffffff"
+                        android:drawablePadding="4dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:text="MTR"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:textSize="12sp"
+                        android:layout_weight="1"/>
+                    <Button
+                        android:id="@+id/bt_minibus"
+                        android:drawableTop="@drawable/transit_bus"
+                        android:drawableTint="#ffffff"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:singleLine="true"
+                        android:text="Minibus"
+                        android:textSize="12sp"
+                        android:layout_weight="1"/>
+                    <Button
+                        android:id="@+id/bt_tram"
+                        android:drawableTop="@drawable/transit_tram"
+                        android:drawableTint="#ffffff"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:text="Tram"
+                        android:textSize="12sp"
+                        android:layout_weight="1"/>
 
-            </LinearLayout>
+                </TableRow>
+
+                <TableRow>
+                    <Button
+                        android:id="@+id/bt_lightrail"
+                        android:drawableTop="@drawable/transit_tram"
+                        android:drawableTint="#ffffff"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:text="Light Rail"
+                        android:singleLine="true"
+                        android:textSize="12sp"
+                        android:layout_weight="1"/>
+                    <Button
+                        android:id="@+id/bt_ferry"
+                        android:drawableTop="@drawable/transit_ferry"
+                        android:drawableTint="#ffffff"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:text="Ferry"
+                        android:textSize="12sp"
+                        android:layout_weight="1"/>
+                    <Button
+                        android:id="@+id/bt_uber"
+                        android:drawableTop="@drawable/transit_uber"
+                        android:drawableTint="#ffffff"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:singleLine="true"
+                        android:text="Uber"
+                        android:textSize="12sp"
+                        android:layout_weight="1"/>
+                    <Button
+                        android:id="@+id/bt_map"
+                        android:drawableTop="@drawable/transit_map"
+                        android:drawableTint="#ffffff"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:text="Map"
+                        android:textSize="12sp"
+                        android:layout_weight="1"/>
+                </TableRow>
+            </TableLayout>
 
         </LinearLayout>
 
