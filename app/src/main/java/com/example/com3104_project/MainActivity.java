@@ -45,13 +45,21 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     protected LocationManager locationManager;
     private Location location;
 
-    Button bt_getLoc;
+    Button bt_getLocStart;
+    Button bt_setDest;
+    Button bt_go;
+    Button bt_swap;
     EditText et_from;
+    EditText et_to;
 
 
     SupportMapFragment mapFragment;
-    double myLat = 0;
-    double myLon = 0;
+
+    double fromLat = 0;
+    double fromLon = 0;
+
+    double toLat = 0;
+    double toLon = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,20 +68,47 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         refreshMap();
-        bt_getLoc = findViewById(R.id.bt_getLoc);
+
+        bt_getLocStart = findViewById(R.id.bt_getLocStart);
+        bt_setDest = findViewById(R.id.bt_setDest);
+        bt_swap = findViewById(R.id.bt_swap);
+
         et_from = findViewById(R.id.et_from);
+        et_to = findViewById(R.id.et_to);
 
         // Button actions
-        bt_getLoc.setOnClickListener(new View.OnClickListener(){
+        bt_getLocStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("Button", "Get loc. button clicked");
                 refreshMap();
-                et_from.setText(reverseGeoCode(myLat,myLon));
+                String fromAddr = reverseGeoCode(fromLat, fromLon);
+                et_from.setText(fromAddr);
+                Log.d("start", "Start loc: "+fromAddr);
+                Log.d("from_to", "Start: lan"+fromLat+" lon"+fromLon);
             }
         });
 
+        bt_setDest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String search = et_to.getText().toString();
+                Log.d("Button", "Set destination button clicked, you inputed: \""+ search+"\"" );
+                geocoder(search);
 
+                String toAddr = reverseGeoCode(toLat, toLon);
+                et_to.setText(toAddr);
+                Log.d("from_to", "Destination: lan"+toLat+" lon"+toLon);
+            }
+        });
+
+        // Swap two point lan lon & its address
+        bt_swap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
 
     }
@@ -88,11 +123,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CODE){
-            if((grantResults.length >0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)){
+        if (requestCode == REQUEST_CODE) {
+            if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 getLastLocation();
             }
-        }else{
+        } else {
             Toast.makeText(MainActivity.this, "permission not granted", Toast.LENGTH_LONG).show();
         }
 
@@ -118,9 +153,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 // to handle the case where the user grants the permission. See the documentation
                 // for ActivityCompat#requestPermissions for more details.
                 askPermission();
+                getLastLocation();
                 return;
             }
-            Log.d("Network-GPS", "isNetworkEnabled: "+isNetworkEnabled);
+            Log.d("Network-GPS", "isNetworkEnabled: " + isNetworkEnabled);
             if (isNetworkEnabled) {
                 // get loc update
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
@@ -128,10 +164,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                         MIN_DISTANCE_CHANGE_FOR_UPDATES,
                         (LocationListener) this);
                 location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                if (location != null){
-                    myLat = location.getLatitude();
-                    myLon = location.getLongitude();
-                    Log.d("location","GPS Provider location obtained, lat "+myLat+" lon "+myLon);
+                if (location != null) {
+                    fromLat = location.getLatitude();
+                    fromLon = location.getLongitude();
+                    Log.d("location", "GPS Provider location obtained, lat " + fromLat + " lon " + fromLon);
                     Toast.makeText(MainActivity.this, "GPS Provider location obtained", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -156,17 +192,17 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
         // Add a marker in Sydney and move the camera
-        LatLng myLocation = new LatLng(myLat, myLon);
-        Log.d("location", "showing map now "+ myLat+"::"+myLon);
+        LatLng myLocation = new LatLng(fromLat, fromLon);
+        Log.d("location", "showing map now " + fromLat + "::" + fromLon);
 
-        String addr = reverseGeoCode(myLat, myLon);         // Convert lan lon to address
+        String addr = reverseGeoCode(fromLat, fromLon);         // Convert lan lon to address
 
-        mMap.addMarker(new MarkerOptions().position(myLocation).title(addr));
+        mMap.addMarker(new MarkerOptions().position(myLocation).title("Start"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,15));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
     }
 
-    public String reverseGeoCode(double lat, double lon){
+    private String reverseGeoCode(double lat, double lon) {
         String addressText = "";
 
         try {
@@ -179,18 +215,51 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 return addressText;
             } else {
                 Log.d("reverseGeoCode", "Address not found, lan=" + lat + " lon" + lon);
-                return "Address not found, lan=" + lat + " lon" + lon;
+                return null;
+//                return "Address not found, lan=" + lat + " lon" + lon;
             }
         } catch (IOException e) {
             e.printStackTrace();
             Log.d("reverseGeoCode", e.toString());
         }
-        return "Address not found, lan=" + lat + " lon" + lon;
+//        return "Address not found, lan=" + lat + " lon" + lon;
+        return null;
+    }
+
+    public void geocoder(String location) {
+        try {
+            if (location != null || !location.equals("")) {
+                List<Address> addressList = null;
+
+                Geocoder geocoder = new Geocoder(this);
+                try {
+                    addressList = geocoder.getFromLocationName(location, 1);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Address address = addressList.get(0);
+                LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                mMap.addMarker(new MarkerOptions().position(latLng).title("End"));
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+
+                toLat = address.getLatitude();
+                toLon = address.getLongitude();
+
+                Toast.makeText(MainActivity.this, "Destination found", Toast.LENGTH_LONG).show();
+                Log.d("Geocode", "Address: "+address.toString()+"\nlat: " + address.getLatitude() + " lon: " + address.getLongitude());
+
+            }
+        }catch (Exception e){
+            Toast.makeText(MainActivity.this, "Please enter a destination address", Toast.LENGTH_LONG).show();
+            Log.d("Geocode", e.toString());
+        }
     }
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
 
     }
-
 }
