@@ -9,6 +9,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,6 +45,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     protected LocationManager locationManager;
     private Location location;
 
+    Button bt_getLoc;
+    EditText et_from;
+
 
     SupportMapFragment mapFragment;
     double myLat = 0;
@@ -49,11 +55,30 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Initial layout display
         super.onCreate(savedInstanceState);
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        refreshMap();
+        bt_getLoc = findViewById(R.id.bt_getLoc);
+        et_from = findViewById(R.id.et_from);
 
+        // Button actions
+        bt_getLoc.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.d("Button", "Get loc. button clicked");
+                refreshMap();
+                et_from.setText(reverseGeoCode(myLat,myLon));
+            }
+        });
+
+
+
+
+    }
+
+    private void refreshMap() {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(MainActivity.this);
@@ -167,4 +192,5 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public void onLocationChanged(@NonNull Location location) {
 
     }
+
 }
