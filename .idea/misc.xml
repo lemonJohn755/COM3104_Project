@@ -25,13 +25,19 @@
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/drawable-v24/commute.xml" value="0.334375" />
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/drawable-v24/directions.xml" value="0.334375" />
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/drawable-v24/my_location.xml" value="0.334375" />
+        <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/drawable-v24/my_location_36dp.xml" value="0.22407407407407406" />
+        <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/drawable-v24/my_location_small.xml" value="0.22407407407407406" />
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/drawable-v24/near_me.xml" value="0.334375" />
+        <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/drawable-v24/search.xml" value="0.29726027397260274" />
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/drawable-v24/swap_vert.xml" value="0.334375" />
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/drawable-v24/transit_map.xml" value="0.334375" />
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/drawable/round_btn.xml" value="0.334375" />
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/drawable/transit_bus.xml" value="0.334375" />
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/drawable/transit_ferry.xml" value="0.334375" />
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="app/src/main/res/drawable-v24/checkflag.xml" value="0.17708333333333334" />
+        <entry key="app/src/main/res/drawable-v24/my_location.xml" value="0.2866666666666667" />
+        <entry key="app/src/main/res/drawable-v24/my_location_36dp.xml" value="0.2866666666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
       </map>
     </option>
