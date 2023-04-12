@@ -1,6 +1,7 @@
 package com.example.com3104_project;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -53,10 +54,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     ImageButton imgbt_getGPSStart;
     ImageButton imgbt_searchLocStart;
     ImageButton imgbt_setDest;
+
     Button bt_go;
     Button bt_swap;
+    Button bt_bus;
+
     EditText et_from;
     EditText et_to;
+
+    float ZOOM = 15;
 
 
     SupportMapFragment mapFragment;
@@ -72,6 +78,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Hide title bar
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        getSupportActionBar().hide();
+
+
         // Initial layout display
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -81,10 +92,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         imgbt_getGPSStart = findViewById(R.id.bt_getGPSStart);
         imgbt_searchLocStart = findViewById(R.id.imgbt_searchLocStart);
         imgbt_setDest = findViewById(R.id.imgbt_setDest);
-//        bt_swap = findViewById(R.id.bt_swap);
 
         et_from = findViewById(R.id.et_from);
         et_to = findViewById(R.id.et_to);
+
+        bt_bus = findViewById(R.id.bt_bus);
 
         // Get current loc button with GPS
         imgbt_getGPSStart.setOnClickListener(new View.OnClickListener() {
@@ -107,9 +119,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Log.d("Button", "Search loc start button clicked, inputed: "+ startLoc);
 
                 // Get lan lon from startLoc
-                Map cordinates = Geocoder(startLoc);
-                fromLat = (double) cordinates.get("lat");
-                fromLon = (double) cordinates.get("lon");
+                Map coordinates = Geocoder(startLoc);
+                fromLat = (double) coordinates.get("lat");
+                fromLon = (double) coordinates.get("lon");
 
                 // Put a marker for start loc
                 LatLng loc = new LatLng(fromLat, fromLon);
@@ -122,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 startMarker = mMap.addMarker(new MarkerOptions().position(loc).title("Start"));
 
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(loc));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 15));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, ZOOM));
 
                 // Display destination address into et_from edittext
                 String fromAddr = reverseGeoCode(fromLat, fromLon);
@@ -139,41 +151,38 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 String search = et_to.getText().toString();
                 Log.d("Button", "Set destination button clicked, you inputed: \""+ search+"\"" );
 
-//                // Text loc to lan lon with geocoder
-//                LatLng tolatLng = Geocoder(search);
-//
-//                // Add destination marker on map
-//                mMap.addMarker(new MarkerOptions().position(tolatLng).title("End").icon(BitmapDescriptorFactory.fromResource(R.drawable.chequered_flag)));
-//                mMap.animateCamera(CameraUpdateFactory.newLatLng(tolatLng));
-//                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(tolatLng, 15));
-//
-//                String toAddr = reverseGeoCode(toLat, toLon);
-//                et_to.setText(toAddr);
-//                Log.d("from_to", "Destination: lan, long => "+toLat+", "+toLon);
-
                 // Get lan lon from startLoc
-                Map cordinates = Geocoder(search);
-                toLat = (double) cordinates.get("lat");
-                toLon = (double) cordinates.get("lon");
+                Map coordinates = Geocoder(search);
+                toLat = (double) coordinates.get("lat");
+                toLon = (double) coordinates.get("lon");
 
                 // Put a marker for start loc
-                LatLng loc = new LatLng(toLat, toLon);
+                LatLng toloc = new LatLng(toLat, toLon);
 
                 if(destMarker != null){
                     destMarker.remove();
                 }
 
-                destMarker = mMap.addMarker(new MarkerOptions().position(loc).title("Destination")
+                destMarker = mMap.addMarker(new MarkerOptions().position(toloc).title("Destination")
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.chequered_flag)));
-                mMap.animateCamera(CameraUpdateFactory.newLatLng(loc));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 15));
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(toloc));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(toloc, ZOOM));
 
                 // Display destination address into et_from edittext
                 String toAddr = reverseGeoCode(toLat, toLon);
                 et_to.setText(toAddr);
 
                 Log.d("from_to", "Destination: lan, long => "+toLat+", "+toLon);
+            }
+        });
 
+        bt_bus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, BusSearchActivity.class);
+
+                // start the activity connect to the specified class
+                startActivity(intent);
             }
         });
 
@@ -270,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.addMarker(new MarkerOptions().position(loc).title("You're here")
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.gps)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 15));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, ZOOM));
     }
 
     private String reverseGeoCode(double lat, double lon) {
@@ -318,7 +327,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 //            mMap.addMarker(new MarkerOptions().position(tolatLng).title("End").icon(BitmapDescriptorFactory.fromResource(R.drawable.chequered_flag)));
 //            mMap.animateCamera(CameraUpdateFactory.newLatLng(tolatLng));
-//            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(tolatLng, 15));
+//            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(tolatLng, ZOOM));
 
 //            toLat = address.getLatitude();
 //            toLon = address.getLongitude();
