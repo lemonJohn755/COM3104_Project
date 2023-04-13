@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".BusSearchActivity">
 
     <LinearLayout
@@ -22,79 +22,50 @@
 
             <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="12dp">
 
                 <TableRow>
                     <SearchView
                         android:id="@+id/sv_search_bus"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:queryHint="Search bus route"
                         android:iconifiedByDefault="false"/>
                 </TableRow>>
+                <TableRow>
+                    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/rgp_busCompany"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="KMB" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="CTB" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="NWFB" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="NLB" />
+                    </RadioGroup>
+                </TableRow>
             </TableLayout>
-
-<!--&lt;!&ndash;                    <EditText&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:id="@+id/et_searchBus"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_width="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_weight="10"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:ems="10"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:hint="Enter bus route"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:singleLine="true"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:minHeight="48dp" />&ndash;&gt;-->
-
-
-
-<!--&lt;!&ndash;                    <ImageButton&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:id="@+id/imgbt_searchBus"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_height="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_weight="1"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:contentDescription="Search start address"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:src="@drawable/search" />&ndash;&gt;-->
-<!--                </TableRow>-->
-
-<!--&lt;!&ndash;                <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:text="Company"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:textAlignment="center"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:textSize="16sp"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:textStyle="bold"/>&ndash;&gt;-->
-
-<!--&lt;!&ndash;                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:id="@+id/rgp_busCompany"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:orientation="horizontal">&ndash;&gt;-->
-
-<!--&lt;!&ndash;                    <RadioButton&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_weight="1"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:text="KMB" />&ndash;&gt;-->
-
-<!--&lt;!&ndash;                    <RadioButton&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_weight="1"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:text="CTB" />&ndash;&gt;-->
-
-<!--&lt;!&ndash;                    <RadioButton&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_weight="1"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:text="NWFB" />&ndash;&gt;-->
-
-<!--&lt;!&ndash;                    <RadioButton&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_weight="1"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:text="NLB" />&ndash;&gt;-->
-<!--&lt;!&ndash;                </RadioGroup>&ndash;&gt;-->
-<!--            </TableLayout>-->
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView

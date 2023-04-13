@@ -18,13 +18,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.COM3104_Project"
-        >
-
+        android:theme="@style/Theme.COM3104_Project">
+        <activity
+            android:name=".BusStopListActivity"
+            android:exported="false" />
         <activity
             android:name=".BusSearchActivity"
-            android:exported="false" />
-        <!-- android:theme="@style/Theme.COM3104_Project" -->
+            android:exported="false" /> <!-- android:theme="@style/Theme.COM3104_Project" -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />

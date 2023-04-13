@@ -30,7 +30,7 @@ public class BusAdaptor extends RecyclerView.Adapter<BusViewHolder> {
     @NonNull
     @Override
     public BusViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new BusViewHolder((LayoutInflater.from(context).inflate(R.layout.bus_item,parent,false)));
+        return new BusViewHolder((LayoutInflater.from(context).inflate(R.layout.bus_routes_item,parent,false)));
     }
 
     @Override

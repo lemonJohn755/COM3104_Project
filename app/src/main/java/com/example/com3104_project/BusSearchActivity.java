@@ -32,7 +32,7 @@ public class BusSearchActivity extends AppCompatActivity implements BusRouteList
     ImageButton imgbt_searchBus;
     SearchView sv_search_bus;
 
-    List<Bus> items = new ArrayList<Bus>();     // ArrayList to store bus route obj
+    List<Bus> bus_routes = new ArrayList<Bus>();     // ArrayList to store bus route obj
     BusAdaptor busAdaptor;
 
     @Override
@@ -66,21 +66,18 @@ public class BusSearchActivity extends AppCompatActivity implements BusRouteList
         });
 
         // RecycleView list to display all the bus routes
-        busAdaptor = new BusAdaptor(getApplicationContext(), items, this);
+        busAdaptor = new BusAdaptor(getApplicationContext(), bus_routes, this);
         RecyclerView recyclerView = findViewById(R.id.rv_allBus);
         recyclerView.setLayoutManager((new LinearLayoutManager(this)));
 //        recyclerView.setAdapter(new BusAdaptor(getApplicationContext(), items));
         recyclerView.setAdapter(busAdaptor);
-
-
-
 
     }
 
     public void filterList(String text) {
         List<Bus> filteredList = new ArrayList<>();
 
-        for(Bus bus : items){
+        for(Bus bus : bus_routes){
             if( bus.getRoute().toLowerCase(Locale.ROOT).contains(text.toLowerCase(Locale.ROOT))){
                 filteredList.add(bus);
             }
@@ -94,6 +91,7 @@ public class BusSearchActivity extends AppCompatActivity implements BusRouteList
         }
     }
 
+    // Back button at title bar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -132,7 +130,7 @@ public class BusSearchActivity extends AppCompatActivity implements BusRouteList
                     String fromLoc = getValue("LOC_START_NAMEE", element2);
                     String endLoc = getValue("LOC_END_NAMEE", element2);
 
-                    items.add(new Bus(busRoute, fromLoc, endLoc, company));
+                    bus_routes.add(new Bus(busRoute, fromLoc, endLoc, company));
                     Log.d("bus route", busRoute + ", From: "+ fromLoc+ " To: "+ endLoc);
 
                 }
@@ -153,17 +151,14 @@ public class BusSearchActivity extends AppCompatActivity implements BusRouteList
 
     @Override
     public void onRouteClicked(Bus bus) {
+        Toast.makeText(this, "Route "+bus.getRoute()+ "\nProvider: "+ bus.getCompany()+ "\nFrom: "+bus.getFromLoc()+"\nTo: "+ bus.getToLoc(), Toast.LENGTH_SHORT).show();
         Log.d("rv", "selected item\nRoute "+bus.getRoute()+ ", Provider: "+ bus.getCompany()+ ", From: "+bus.getFromLoc()+" ,To: "+ bus.getToLoc());
 
-        // Call API here
-
-        // For KMB
-
-        // For CTB
-
-        // For NWFB
-
-        // and other if has...
+        // Go to BusStopListActivity
+        Intent intent = new Intent(BusSearchActivity.this, BusStopListActivity.class);
+        // start the activity connect to the specified class
+        intent.putExtra("bus", bus);    // Pass bus obj to BusStopListActivity
+        startActivity(intent);
 
 
 

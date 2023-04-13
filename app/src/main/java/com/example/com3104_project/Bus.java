@@ -1,6 +1,8 @@
 package com.example.com3104_project;
 
-public class Bus {
+import java.io.Serializable;
+
+public class Bus implements Serializable {
 
     String route;
     String company;
