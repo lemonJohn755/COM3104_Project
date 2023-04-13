@@ -4,11 +4,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class BusViewHolder extends RecyclerView.ViewHolder {
 
     TextView tv_bus_route, tv_busTo, tv_busFrom, tv_bus_company;
+    CardView card_bus_route;
 
     public BusViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -20,6 +22,8 @@ public class BusViewHolder extends RecyclerView.ViewHolder {
         tv_busFrom = itemView.findViewById(R.id.tv_busFrom);
 
         tv_bus_company = itemView.findViewById(R.id.tv_bus_company);
+
+        card_bus_route = itemView.findViewById(R.id.card_bus_route);
 
     }
 }

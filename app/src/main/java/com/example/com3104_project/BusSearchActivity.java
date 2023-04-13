@@ -26,13 +26,13 @@ import java.util.Locale;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-public class BusSearchActivity extends AppCompatActivity {
+public class BusSearchActivity extends AppCompatActivity implements BusRouteListener{
 
     EditText et_searchBus;
     ImageButton imgbt_searchBus;
     SearchView sv_search_bus;
 
-    List<Bus> items = new ArrayList<Bus>();
+    List<Bus> items = new ArrayList<Bus>();     // ArrayList to store bus route obj
     BusAdaptor busAdaptor;
 
     @Override
@@ -66,7 +66,7 @@ public class BusSearchActivity extends AppCompatActivity {
         });
 
         // RecycleView list to display all the bus routes
-        busAdaptor = new BusAdaptor(getApplicationContext(), items);
+        busAdaptor = new BusAdaptor(getApplicationContext(), items, this);
         RecyclerView recyclerView = findViewById(R.id.rv_allBus);
         recyclerView.setLayoutManager((new LinearLayoutManager(this)));
 //        recyclerView.setAdapter(new BusAdaptor(getApplicationContext(), items));
@@ -150,4 +150,9 @@ public class BusSearchActivity extends AppCompatActivity {
         return node.getNodeValue();
     }
 
+
+    @Override
+    public void onRouteClicked(Bus bus) {
+        Log.d("route item", "Route "+bus.getRoute()+ " selected");
+    }
 }

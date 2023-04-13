@@ -40,7 +40,7 @@
         <entry key="app/src/main/res/drawable-v24/my_location_36dp.xml" value="0.2866666666666667" />
         <entry key="app/src/main/res/layout/activity_bus_search.xml" value="0.30171073094867806" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/bus_item.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/bus_item.xml" value="0.4469565217391304" />
         <entry key="app/src/main/res/layout/bus_route_list.xml" value="0.20572916666666666" />
         <entry key="app/src/main/res/xml/bus_route.xml" value="0.2586050724637681" />
       </map>
