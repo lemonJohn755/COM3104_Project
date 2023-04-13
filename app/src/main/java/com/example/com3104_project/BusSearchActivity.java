@@ -4,9 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import org.w3c.dom.NodeList;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -28,9 +30,10 @@ public class BusSearchActivity extends AppCompatActivity {
 
     EditText et_searchBus;
     ImageButton imgbt_searchBus;
-
+    SearchView sv_search_bus;
 
     List<Bus> items = new ArrayList<Bus>();
+    BusAdaptor busAdaptor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,27 +48,50 @@ public class BusSearchActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        et_searchBus = findViewById(R.id.et_searchBus);
+//        et_searchBus = findViewById(R.id.et_searchBus);
 
-        // RecycleView list to display all the bus routes
-        RecyclerView recyclerView = findViewById(R.id.rv_allBus);
-        recyclerView.setLayoutManager((new LinearLayoutManager(this)));
-        recyclerView.setAdapter(new BusAdaptor(getApplicationContext(), items));
-
-
-        imgbt_searchBus = findViewById(R.id.imgbt_searchBus);
-        imgbt_searchBus.setOnClickListener(new View.OnClickListener() {
+        sv_search_bus = findViewById(R.id.sv_search_bus);
+        sv_search_bus.clearFocus();
+        sv_search_bus.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View v) {
-                String search = et_searchBus.getText().toString();
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
-                // Call API to search route
-
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return false;
             }
         });
 
+        // RecycleView list to display all the bus routes
+        busAdaptor = new BusAdaptor(getApplicationContext(), items);
+        RecyclerView recyclerView = findViewById(R.id.rv_allBus);
+        recyclerView.setLayoutManager((new LinearLayoutManager(this)));
+//        recyclerView.setAdapter(new BusAdaptor(getApplicationContext(), items));
+        recyclerView.setAdapter(busAdaptor);
 
 
+
+
+    }
+
+    public void filterList(String text) {
+        List<Bus> filteredList = new ArrayList<>();
+
+        for(Bus bus : items){
+            if( bus.getRoute().toLowerCase(Locale.ROOT).contains(text.toLowerCase(Locale.ROOT))){
+                filteredList.add(bus);
+            }
+        }
+
+        if (filteredList.isEmpty()){
+            Toast.makeText(this, "No route found", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            busAdaptor.setFilteredList(filteredList);
+        }
     }
 
     @Override

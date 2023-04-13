@@ -89,11 +89,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(binding.getRoot());
         refreshMap();
 
-        imgbt_getGPSStart = findViewById(R.id.bt_getGPSStart);
+
+        imgbt_getGPSStart = findViewById(R.id.imgbt_getGPSStart);
         imgbt_searchLocStart = findViewById(R.id.imgbt_searchLocStart);
         imgbt_setDest = findViewById(R.id.imgbt_setDest);
 
         et_from = findViewById(R.id.et_from);
+
+        String fromAddr = reverseGeoCode(fromLat, fromLon);
+        et_from.setText(fromAddr);
+
         et_to = findViewById(R.id.et_to);
 
         bt_bus = findViewById(R.id.bt_bus);

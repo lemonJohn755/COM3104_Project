@@ -14,10 +14,26 @@ public class BusAdaptor extends RecyclerView.Adapter<BusViewHolder> {
     public BusAdaptor(Context context, List<Bus> items) {
         this.context = context;
         this.items = items;
+//        this.busRouteListener = busRouteListener;
     }
 
-    Context context;
-    List<Bus> items;
+//    public BusAdaptor(List<Bus> items) {
+//        this.items = items;
+//    }
+
+    private Context context;
+    private List<Bus> items;
+//    private BusRouteListener busRouteListener;
+
+    public void setFilteredList(List<Bus> filteredList) {
+        this.items = filteredList;
+        notifyDataSetChanged();
+    }
+
+//    public void setFilteredList(List<Bus> filteredList){
+//        this.items = filteredList;
+//        notifyDataSetChanged();
+//    }
 
     @NonNull
     @Override
