@@ -153,6 +153,19 @@ public class BusSearchActivity extends AppCompatActivity implements BusRouteList
 
     @Override
     public void onRouteClicked(Bus bus) {
-        Log.d("route item", "Route "+bus.getRoute()+ " selected");
+        Log.d("rv", "selected item\nRoute "+bus.getRoute()+ ", Provider: "+ bus.getCompany()+ ", From: "+bus.getFromLoc()+" ,To: "+ bus.getToLoc());
+
+        // Call API here
+
+        // For KMB
+
+        // For CTB
+
+        // For NWFB
+
+        // and other if has...
+
+
+
     }
 }
