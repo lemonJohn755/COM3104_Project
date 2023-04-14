@@ -131,10 +131,12 @@ public class BusSearchActivity extends AppCompatActivity implements BusRouteList
                     String endLoc = getValue("LOC_END_NAMEE", element2);
 
                     bus_routes.add(new Bus(busRoute, fromLoc, endLoc, company));
-                    Log.d("bus route", busRoute + ", From: "+ fromLoc+ " To: "+ endLoc);
+//                    Log.d("bus route", busRoute + ", From: "+ fromLoc+ " To: "+ endLoc);
 
                 }
             }//end of for loop
+            Log.d("bus route", nList.getLength()+" routes read from xml");
+
 
         } catch (Exception e) {
             Log.d("xml", e.toString());
@@ -151,7 +153,7 @@ public class BusSearchActivity extends AppCompatActivity implements BusRouteList
 
     @Override
     public void onRouteClicked(Bus bus) {
-        Toast.makeText(this, "Route "+bus.getRoute()+ "\nProvider: "+ bus.getCompany()+ "\nFrom: "+bus.getFromLoc()+"\nTo: "+ bus.getToLoc(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Route "+bus.getRoute()+ "\nProvider: "+ bus.getCompany()+ "\nFrom: "+bus.getFromLoc()+"\nTo: "+ bus.getToLoc(), Toast.LENGTH_SHORT).show();
         Log.d("rv", "selected item\nRoute "+bus.getRoute()+ ", Provider: "+ bus.getCompany()+ ", From: "+bus.getFromLoc()+" ,To: "+ bus.getToLoc());
 
         // Go to BusStopListActivity
