@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     Button bt_go;
     Button bt_swap;
     Button bt_bus;
+    Button bt_gmb;
 
     EditText et_from;
     EditText et_to;
@@ -102,6 +103,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         et_to = findViewById(R.id.et_to);
 
         bt_bus = findViewById(R.id.bt_bus);
+
+        bt_gmb = findViewById(R.id.bt_gmb);
 
         // Get current loc button with GPS
         imgbt_getGPSStart.setOnClickListener(new View.OnClickListener() {
@@ -185,6 +188,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, BusSearchActivity.class);
+
+                // start the activity connect to the specified class
+                startActivity(intent);
+            }
+        });
+
+        bt_gmb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, GMBActivity.class);
 
                 // start the activity connect to the specified class
                 startActivity(intent);

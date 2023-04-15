@@ -34,13 +34,16 @@
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/drawable/round_btn.xml" value="0.334375" />
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/drawable/transit_bus.xml" value="0.334375" />
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/drawable/transit_ferry.xml" value="0.334375" />
+        <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/layout/activity_bus_search.xml" value="0.23972602739726026" />
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/layout/activity_bus_stop_list.xml" value="0.2101851851851852" />
+        <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/layout/activity_gmbactivity.xml" value="0.24305555555555555" />
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/layout/bus_routes_item.xml" value="0.15787037037037038" />
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/layout/bus_stop_item.xml" value="0.15787037037037038" />
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/layout/fragment_inbound__tab.xml" value="0.25" />
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/layout/fragment_item_list.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/layout/fragment_outbound__tab.xml" value="0.25" />
+        <entry key="..\:/Users/chanw/Repo/COM3104_Project/app/src/main/res/layout/gmb_route_item.xml" value="0.33" />
         <entry key="app/src/main/res/drawable-v24/checkflag.xml" value="0.17708333333333334" />
         <entry key="app/src/main/res/drawable-v24/my_location.xml" value="0.2866666666666667" />
         <entry key="app/src/main/res/drawable-v24/my_location_36dp.xml" value="0.2866666666666667" />

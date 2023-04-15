@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.COM3104_Project">
         <activity
+            android:name=".GMBActivity"
+            android:exported="false" />
+        <activity
             android:name=".BusStopListActivity"
             android:exported="false" />
         <activity

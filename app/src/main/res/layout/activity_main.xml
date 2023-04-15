@@ -155,21 +155,21 @@
                                     android:text="Bus"
                                     android:textSize="12sp" />
 
-                                <Button
-                                    android:id="@+id/bt_mtr"
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:layout_marginLeft="4dp"
-                                    android:layout_marginRight="4dp"
-                                    android:layout_weight="1"
-                                    android:drawableTop="@drawable/transit_subway"
-                                    android:drawablePadding="4dp"
-                                    android:drawableTint="#ffffff"
-                                    android:text="MTR"
-                                    android:textSize="12sp" />
+<!--                                <Button-->
+<!--                                    android:id="@+id/bt_mtr"-->
+<!--                                    android:layout_width="80dp"-->
+<!--                                    android:layout_height="80dp"-->
+<!--                                    android:layout_marginLeft="4dp"-->
+<!--                                    android:layout_marginRight="4dp"-->
+<!--                                    android:layout_weight="1"-->
+<!--                                    android:drawableTop="@drawable/transit_subway"-->
+<!--                                    android:drawablePadding="4dp"-->
+<!--                                    android:drawableTint="#ffffff"-->
+<!--                                    android:text="MTR"-->
+<!--                                    android:textSize="12sp" />-->
 
                                 <Button
-                                    android:id="@+id/bt_minibus"
+                                    android:id="@+id/bt_gmb"
                                     android:layout_width="80dp"
                                     android:layout_height="80dp"
                                     android:layout_marginLeft="4dp"
@@ -178,7 +178,7 @@
                                     android:drawableTop="@drawable/transit_bus"
                                     android:drawableTint="#ffffff"
                                     android:singleLine="true"
-                                    android:text="Minibus"
+                                    android:text="Green Minibus"
                                     android:textSize="12sp" />
 
                                 <Button
@@ -196,18 +196,18 @@
 
                             <TableRow>
 
-                                <Button
-                                    android:id="@+id/bt_lightrail"
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:layout_marginLeft="4dp"
-                                    android:layout_marginRight="4dp"
-                                    android:layout_weight="1"
-                                    android:drawableTop="@drawable/transit_tram"
-                                    android:drawableTint="#ffffff"
-                                    android:singleLine="true"
-                                    android:text="Light Rail"
-                                    android:textSize="12sp" />
+<!--                                <Button-->
+<!--                                    android:id="@+id/bt_lightrail"-->
+<!--                                    android:layout_width="80dp"-->
+<!--                                    android:layout_height="80dp"-->
+<!--                                    android:layout_marginLeft="4dp"-->
+<!--                                    android:layout_marginRight="4dp"-->
+<!--                                    android:layout_weight="1"-->
+<!--                                    android:drawableTop="@drawable/transit_tram"-->
+<!--                                    android:drawableTint="#ffffff"-->
+<!--                                    android:singleLine="true"-->
+<!--                                    android:text="Light Rail"-->
+<!--                                    android:textSize="12sp" />-->
 
                                 <Button
                                     android:id="@+id/bt_ferry"
@@ -234,17 +234,17 @@
                                     android:text="Uber"
                                     android:textSize="12sp" />
 
-                                <Button
-                                    android:id="@+id/bt_map"
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:layout_marginLeft="4dp"
-                                    android:layout_marginRight="4dp"
-                                    android:layout_weight="1"
-                                    android:drawableTop="@drawable/transit_map"
-                                    android:drawableTint="#ffffff"
-                                    android:text="Map"
-                                    android:textSize="12sp" />
+<!--                                <Button-->
+<!--                                    android:id="@+id/bt_map"-->
+<!--                                    android:layout_width="80dp"-->
+<!--                                    android:layout_height="80dp"-->
+<!--                                    android:layout_marginLeft="4dp"-->
+<!--                                    android:layout_marginRight="4dp"-->
+<!--                                    android:layout_weight="1"-->
+<!--                                    android:drawableTop="@drawable/transit_map"-->
+<!--                                    android:drawableTint="#ffffff"-->
+<!--                                    android:text="Map"-->
+<!--                                    android:textSize="12sp" />-->
                             </TableRow>
                         </TableLayout>
                     </androidx.cardview.widget.CardView>
