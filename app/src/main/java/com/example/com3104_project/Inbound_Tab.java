@@ -81,7 +81,7 @@ public class Inbound_Tab extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_inbound__tab, container, false);
+        View view = inflater.inflate(R.layout.fragment_inoutbound__tab, container, false);
 
         getStopList(BusStopListActivity.bus, "inbound");
 
@@ -169,6 +169,12 @@ public class Inbound_Tab extends Fragment {
 
                     ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, stopList);
                     lv_stopList.setAdapter(adapter);
+
+//                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+//                    MyListAdapter adapter = new MyListAdapter(myListData);
+//                    recyclerView.setHasFixedSize(true);
+//                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//                    recyclerView.setAdapter(adapter);
 
 
                 }

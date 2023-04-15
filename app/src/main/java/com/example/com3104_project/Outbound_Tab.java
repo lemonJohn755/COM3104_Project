@@ -39,7 +39,7 @@ public class Outbound_Tab extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_outbound__tab, container, false);
+        View view = inflater.inflate(R.layout.fragment_inoutbound__tab, container, false);
 
         getStopList(BusStopListActivity.bus, "outbound");
 
