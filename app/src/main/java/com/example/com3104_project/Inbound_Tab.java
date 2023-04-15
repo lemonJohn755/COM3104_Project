@@ -75,6 +75,8 @@ public class Inbound_Tab extends Fragment {
     ListView lv_stopList;
     Handler mHandler;
     List<BusStop> busStops = new ArrayList<BusStop>();
+    String BOUND = "inbound";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,21 +85,20 @@ public class Inbound_Tab extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_inoutbound__tab, container, false);
 
-        getStopList(BusStopListActivity.bus, "inbound");
+        getStopList(BusStopListActivity.bus, BOUND);
 
         lv_stopList = view.findViewById(R.id.lv_stopList);
 
         return view;
     }
 
-    private void getStopList(Bus bus, String bound) {
-//        final String[] json_return = {""};
+    public void getStopList(Bus bus, String bound) {
         String url;
         String company = bus.getCompany();
         String route = bus.getRoute();
+        Toast.makeText(getContext() , "Loading...", Toast.LENGTH_LONG).show();
 
-
-        if (company.equals("KMB"))  {
+        if (company.contains("KMB"))  {
             url = "https://data.etabus.gov.hk/v1/transport/kmb/route-stop/"+route+"/"+bound+"/1";
             Uri builtURI = Uri.parse(url).buildUpon().build();
             String uri_string = builtURI.toString();
@@ -129,29 +130,10 @@ public class Inbound_Tab extends Fragment {
 
                             Log.d("stop", "stopID: "+ stopID);
 
-                            Map stopInfo = getKMBStopName(stopID);
+                            Map stopInfo = getStopName(stopID, company);
                             stopName = stopInfo.get("stopName").toString();
                             stopLat = (Double) stopInfo.get("lat");
                             stopLon = (Double) stopInfo.get("lon");
-
-//                            Thread thread2 = new Thread(new ThreadAPI("https://data.etabus.gov.hk/v1/transport/kmb/stop/"+stopID));
-//                            thread.start();
-//                            mHandler = new Handler(Looper.getMainLooper()) {
-//                                public void handleMessage(@NonNull Message msg) {
-////                                    JSONObject jsonObj = null;
-//                                    try {
-//
-//                                        JSONObject json = new JSONObject(jsonStr);
-//                                        String stopName = json.getJSONObject("data").getString("name_en");
-//
-//                                        Log.d("stopName is", stopName);
-//
-//                                    } catch (JSONException e) {
-//                                        e.printStackTrace();
-//                                    }
-//                                }};
-//                            busStops.add(new BusStop(route, bound, (i+1), stopID, stopName, stopLat, stopLon));
-//                            busStops.add((i+1)+". stopID: "+stopID +" "+ getKMBStopName(stopID).get("stopName"));
 
                             BusStop busStop = new BusStop(bus.getRoute(), bound, (i+1), stopID, stopName, stopLat, stopLon);
                             stopList.add(busStop.getSeq()+". "+busStop.getStopName());
@@ -164,38 +146,149 @@ public class Inbound_Tab extends Fragment {
                     }
 
                     if (stopList.isEmpty()){
-                        Toast.makeText(getContext(), "No data", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Stops not available", Toast.LENGTH_SHORT).show();
                     }
 
                     ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, stopList);
                     lv_stopList.setAdapter(adapter);
-
-//                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-//                    MyListAdapter adapter = new MyListAdapter(myListData);
-//                    recyclerView.setHasFixedSize(true);
-//                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//                    recyclerView.setAdapter(adapter);
-
-
                 }
             };
 
+        } else if(company.contains("CTB")){
+            url = "https://rt.data.gov.hk/v1.1/transport/citybus-nwfb/route-stop/CTB/"+route+"/"+bound;
+            Uri builtURI = Uri.parse(url).buildUpon().build();
+            String uri_string = builtURI.toString();
+
+            Thread thread = new Thread(new ThreadAPI(uri_string));
+            thread.start();
+
+            mHandler = new Handler(Looper.getMainLooper()) {
+                public void handleMessage(@NonNull Message msg) {
+                    String jsonStr = msg.obj.toString();
+                    Log.d("msg", jsonStr);
+
+                    ArrayList stopList = new ArrayList();;
+
+                    final JSONObject[] jsonObj = {null};
+
+                    try{
+                        jsonObj[0] = new JSONObject(jsonStr);
+                        JSONArray stopArr = jsonObj[0].getJSONArray("data");
+
+                        String stopID = "";
+                        String stopName;
+                        double stopLat = 0;
+                        double stopLon = 0;
+
+                        for (int i=0; i<stopArr.length(); i++){
+                            JSONObject stop = stopArr.getJSONObject(i);
+                            stopID = stop.getString("stop");
+
+                            Log.d("stop", "stopID: "+ stopID);
+
+                            Map stopInfo = getStopName(stopID, company);
+                            stopName = stopInfo.get("stopName").toString();
+                            stopLat = (Double) stopInfo.get("lat");
+                            stopLon = (Double) stopInfo.get("lon");
+
+                            BusStop busStop = new BusStop(bus.getRoute(), bound, (i+1), stopID, stopName, stopLat, stopLon);
+                            stopList.add(busStop.getSeq()+". "+busStop.getStopName());
+                            busStops.add(busStop);
+                        }
+
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                    if (stopList.isEmpty()){
+                        Toast.makeText(getContext(), "Stops not available", Toast.LENGTH_SHORT).show();
+                    }
+
+                    ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, stopList);
+                    lv_stopList.setAdapter(adapter);
+                }
+            };
+        } else if(company.contains("NWFB")){
+            url = "https://rt.data.gov.hk/v1.1/transport/citybus-nwfb/route-stop/NWFB/"+route+"/"+bound;
+            Uri builtURI = Uri.parse(url).buildUpon().build();
+            String uri_string = builtURI.toString();
+
+            Thread thread = new Thread(new ThreadAPI(uri_string));
+            thread.start();
+
+            mHandler = new Handler(Looper.getMainLooper()) {
+                public void handleMessage(@NonNull Message msg) {
+                    String jsonStr = msg.obj.toString();
+                    Log.d("msg", jsonStr);
+
+                    ArrayList stopList = new ArrayList();;
+
+                    final JSONObject[] jsonObj = {null};
+
+                    try{
+                        jsonObj[0] = new JSONObject(jsonStr);
+                        JSONArray stopArr = jsonObj[0].getJSONArray("data");
+
+                        String stopID = "";
+                        String stopName;
+                        double stopLat = 0;
+                        double stopLon = 0;
+
+                        for (int i=0; i<stopArr.length(); i++){
+                            JSONObject stop = stopArr.getJSONObject(i);
+                            stopID = stop.getString("stop");
+
+                            Log.d("stop", "stopID: "+ stopID);
+
+                            Map stopInfo = getStopName(stopID, company);
+                            stopName = stopInfo.get("stopName").toString();
+                            stopLat = (Double) stopInfo.get("lat");
+                            stopLon = (Double) stopInfo.get("lon");
+
+                            BusStop busStop = new BusStop(bus.getRoute(), bound, (i+1), stopID, stopName, stopLat, stopLon);
+                            stopList.add(busStop.getSeq()+". "+busStop.getStopName());
+                            busStops.add(busStop);
+                        }
+
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                    if (stopList.isEmpty()){
+                        Toast.makeText(getContext(), "Stops not available", Toast.LENGTH_SHORT).show();
+                    }
+
+                    ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, stopList);
+                    lv_stopList.setAdapter(adapter);
+                }
+            };
         }
         else{
-            Toast.makeText(getContext() , "Not KMB bus", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext() , "Company not available in the app", Toast.LENGTH_SHORT).show();
         }
+
 
 
     }
 
-    private Map<String, Object> getKMBStopName(String stopID) {
+    private Map<String, Object> getStopName(String stopID, String company) {
         Map<String, Object> stopInfo = new HashMap<>();
         String stopName;
         double lat;
         double lon;
+        URL url = null;
+
 
         try{
-            URL url = new URL("https://data.etabus.gov.hk/v1/transport/kmb/stop/"+stopID);
+            if (company.contains("KMB") || company.contains("kmb")){
+                url = new URL("https://data.etabus.gov.hk/v1/transport/kmb/stop/"+stopID);
+            } else if (company.contains("NWFB") || company.contains("nwfb")
+                    || company.contains("CTB") || company.contains("ctb")){
+                url = new URL("https://rt.data.gov.hk/v1.1/transport/citybus-nwfb/stop/"+stopID);
+            }
+//            URL url = new URL("https://data.etabus.gov.hk/v1/transport/kmb/stop/"+stopID);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
 
