@@ -69,7 +69,6 @@ public class BusSearchActivity extends AppCompatActivity implements BusRouteList
         busAdaptor = new BusAdaptor(getApplicationContext(), bus_routes, this);
         RecyclerView recyclerView = findViewById(R.id.rv_allBus);
         recyclerView.setLayoutManager((new LinearLayoutManager(this)));
-//        recyclerView.setAdapter(new BusAdaptor(getApplicationContext(), items));
         recyclerView.setAdapter(busAdaptor);
 
     }

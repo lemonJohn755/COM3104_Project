@@ -50,11 +50,15 @@
         <entry key="app/src/main/res/layout/activity_bus_search.xml" value="0.30171073094867806" />
         <entry key="app/src/main/res/layout/activity_bus_stop_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_gmbactivity.xml" value="0.23233695652173914" />
+        <entry key="app/src/main/res/layout/activity_gmbstop.xml" value="0.22760416666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/bus_item.xml" value="0.4469565217391304" />
         <entry key="app/src/main/res/layout/bus_route_list.xml" value="0.20572916666666666" />
         <entry key="app/src/main/res/layout/bus_routes_item.xml" value="0.17760416666666667" />
         <entry key="app/src/main/res/layout/bus_stop_item.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/content_gmbstop_list.xml" value="0.24166666666666667" />
+        <entry key="app/src/main/res/layout/fragment_gmb_inoutbound__tab.xml" value="0.31023550724637683" />
+        <entry key="app/src/main/res/layout/fragment_inoutbound__tab.xml" value="0.21614583333333334" />
         <entry key="app/src/main/res/layout/gmb_route_item.xml" value="0.25" />
         <entry key="app/src/main/res/xml/bus_route.xml" value="0.2586050724637681" />
       </map>

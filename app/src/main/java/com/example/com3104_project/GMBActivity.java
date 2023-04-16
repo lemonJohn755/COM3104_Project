@@ -181,11 +181,12 @@ public class GMBActivity extends AppCompatActivity implements GMBListener {
     @Override
     public void onRouteClicked(GMB gmb) {
         Toast.makeText(this, "Route "+gmb.getRoute_code()+ " selected", Toast.LENGTH_SHORT).show();
+        Log.d("GMB", "Route "+gmb.getRoute_code()+ " selected");
 
-//        // Go to BusStopListActivity
-//        Intent intent = new Intent(BusSearchActivity.this, BusStopListActivity.class);
-//        // start the activity connect to the specified class
-//        intent.putExtra("bus", bus);    // Pass bus obj to BusStopListActivity
-//        startActivity(intent);
+        // Go to BusStopListActivity
+        Intent intent = new Intent(GMBActivity.this, GMBStopActivity.class);
+        // start the activity connect to the specified class
+        intent.putExtra("gmb", gmb);    // Pass bus obj to BusStopListActivity
+        startActivity(intent);
     }
 }

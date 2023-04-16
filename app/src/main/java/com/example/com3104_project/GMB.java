@@ -1,6 +1,8 @@
 package com.example.com3104_project;
 
-public class GMB {
+import java.io.Serializable;
+
+public class GMB implements Serializable {
     String route_id;
     String region;
     String route_code;
