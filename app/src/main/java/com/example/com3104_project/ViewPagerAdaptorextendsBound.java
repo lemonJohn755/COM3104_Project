@@ -16,11 +16,11 @@ public class ViewPagerAdaptorextendsBound extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-                return new Outbound_Tab();
+                return new BusStopOutbound_Tab();
             case 1:
-                return new Inbound_Tab();
+                return new BusStopInbound_Tab();
             default:
-                return new Outbound_Tab();
+                return new BusStopOutbound_Tab();
         }
     }
 

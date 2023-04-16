@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class Inbound_Tab extends Fragment {
+public class BusStopInbound_Tab extends Fragment {
 
 //    // TODO: Rename parameter arguments, choose names that match
 //    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
