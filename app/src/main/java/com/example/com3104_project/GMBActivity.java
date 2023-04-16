@@ -34,6 +34,7 @@ public class GMBActivity extends AppCompatActivity implements GMBListener {
     List<GMB> gmbRouteList = new ArrayList<>();     // ArrayList to store bus route obj
     RadioGroup rgp_region;
     String region;
+    String route_id = "N/A";
 
     StringRequest mStringRequest;
     private RequestQueue mRequestQueue;
@@ -121,7 +122,8 @@ public class GMBActivity extends AppCompatActivity implements GMBListener {
 
                     for (int i = 0; i < routes.length(); i++) {
                         String route = routes.getString(i);
-                        gmbRouteList.add(new GMB("","HKI", route));
+//                        String route_id = getRouteID("HKI", route);
+                        gmbRouteList.add(new GMB( route_id,"HKI", route));
                         Log.d("Route", route + " "+ "HKI");
                     }
 
@@ -129,16 +131,18 @@ public class GMBActivity extends AppCompatActivity implements GMBListener {
                     routes = regions.getJSONArray("KLN");
                     for (int i = 0; i < routes.length(); i++) {
                         String route = routes.getString(i);
+//                        String route_id = getRouteID("KLN", route);
                         Log.d("Route", route + " "+ "KLN");
-                        gmbRouteList.add(new GMB("","KLN", route));
+                        gmbRouteList.add(new GMB(route_id,"KLN", route));
                     }
 
                     // GMB routes in NT:
                     routes = regions.getJSONArray("NT");
                     for (int i = 0; i < routes.length(); i++) {
                         String route = routes.getString(i);
+//                        String route_id = getRouteID("NT", route);
                         Log.d("Route", route + " "+ "NT");
-                        gmbRouteList.add(new GMB("","NT", route));
+                        gmbRouteList.add(new GMB(route_id,"NT", route));
                     }
 
                 } catch (JSONException e) {
@@ -160,6 +164,46 @@ public class GMBActivity extends AppCompatActivity implements GMBListener {
         mRequestQueue.add(mStringRequest);
 
 
+    }
+
+    private String getRouteID(String region, String route) {
+
+        String url = "https://data.etagmb.gov.hk/route/"+region+"/"+route;
+        mRequestQueue = Volley.newRequestQueue(this);
+
+        // String Request initialized
+        mStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("volley","Response return:" + response);//display the response on screen
+                JSONObject json = null;
+                try {
+
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray dataArray = jsonObject.getJSONArray("data");
+                    JSONObject dataObject = dataArray.getJSONObject(0);
+                    route_id = dataObject.getString("route_id");
+
+                    Log.d("route_id", route + " " + route_id);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                // Update the UI change after API call
+                gmbAdaptor.notifyDataSetChanged();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("volley", "Error :" + error.toString());
+                Toast.makeText(GMBActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        mRequestQueue.add(mStringRequest);
+
+        return route_id;
     }
 
     // Back button at title bar
