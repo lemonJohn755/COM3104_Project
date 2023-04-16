@@ -44,7 +44,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation 'org.simpleframework:simple-xml:2.7.1'
     implementation 'androidx.databinding:databinding-common:7.0.4'
-    implementation 'com.android.volley:volley:1.2.0'
-
-
+    implementation 'com.android.volley:volley:1.2.1'    // adding volley dependency
 }

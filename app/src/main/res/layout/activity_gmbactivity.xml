@@ -19,44 +19,48 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <SearchView
-                android:id="@+id/sv_search_bus"
+                android:id="@+id/sv_search_gmb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:queryHint="Search green minibus route"
                 android:iconifiedByDefault="false"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Select a district"
-                android:layout_margin="4dp"
-                android:textAlignment="center"/>
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Select a region"-->
+<!--                android:layout_margin="4dp"-->
+<!--                android:textAlignment="center"/>-->
 
-            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/rgp_busCompany"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+<!--            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--                android:id="@+id/rgp_region"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:checkedButton="@+id/rbt_hki">-->
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Hong Kong Island" />
+<!--                <RadioButton-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="Hong Kong Island"-->
+<!--                    android:id="@+id/rbt_hki"/>-->
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Kowloon" />
+<!--                <RadioButton-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="Kowloon"-->
+<!--                    android:id="@+id/rbt_kln"/>-->
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="New Territories" />
+<!--                <RadioButton-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="New Territories"-->
+<!--                    android:id="@+id/rbt_nt"/>-->
 
-            </RadioGroup>
+<!--            </RadioGroup>-->
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

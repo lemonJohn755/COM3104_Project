@@ -38,7 +38,14 @@
                     android:layout_weight="2"
                     android:text="69X"
                     android:textSize="30dp" />
-
+                <TextView
+                    android:id="@+id/tv_gmb_region"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Hong Kong Island"
+                    android:textSize="15dp" />
             </TableRow>
         </TableLayout>
 
