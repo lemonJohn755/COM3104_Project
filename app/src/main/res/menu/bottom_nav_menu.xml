@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:icon="@drawable/ic_baseline_directions_bus_24"
+        android:title="Transit"
+        android:id="@+id/item_transit"/>
+    <item
+        android:icon="@drawable/ic_baseline_place_24"
+        android:title="Nearby"
+        android:id="@+id/item_nearby"/>
+</menu>
