@@ -84,9 +84,9 @@ public class GMBAdaptor extends RecyclerView.Adapter<GMBAdaptor.GMBViewHolder> {
 
             tv_gmb_route = itemView.findViewById(R.id.tv_gmb_route);
 
-            tv_gmb_out_dest = itemView.findViewById(R.id.tv_gmb_out_dest);
-
-            tv_gmb_in_dest = itemView.findViewById(R.id.tv_gmb_in_dest);
+//            tv_gmb_out_dest = itemView.findViewById(R.id.tv_gmb_out_dest);
+//
+//            tv_gmb_in_dest = itemView.findViewById(R.id.tv_gmb_in_dest);
 
             tv_gmb_region = itemView.findViewById(R.id.tv_gmb_region);
 

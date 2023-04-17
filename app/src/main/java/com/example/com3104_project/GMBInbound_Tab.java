@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -36,19 +37,18 @@ public class GMBInbound_Tab extends Fragment {
     String region;
     ListView lv_stopList;
     GMB gmb;
+    View view;
+
 
     ArrayList stopList = new ArrayList();
 
-
-    private RequestQueue mRequestQueue;
-    private StringRequest mStringRequest;
-
+    RequestQueue mRequestQueue;
+    StringRequest mStringRequest;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         gmb = GMBStopActivity.gmb;
-
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_gmb_inoutbound__tab, container, false);
@@ -58,10 +58,13 @@ public class GMBInbound_Tab extends Fragment {
 
         getRouteID(region, route_code);
 
+//        tv_circular = view.findViewById(R.id.tv_circular);
+
         lv_stopList = view.findViewById(R.id.lv_stopList);
 
         return view;
     }
+
 
     public void getRouteID(String region, String route_code) {
         String url = "https://data.etagmb.gov.hk/route/"+region+"/"+route_code;
@@ -118,25 +121,34 @@ public class GMBInbound_Tab extends Fragment {
                 Log.d("volley", response);
 
                 JSONObject jsonObject = null;
+                JSONArray routeStops = null;
                 try {
                     jsonObject = new JSONObject(response);
                     String stopName;
 
-                    JSONArray routeStops = jsonObject.getJSONObject("data").getJSONArray("route_stops");
-                    for (int i = 0; i < routeStops.length(); i++) {
-                        JSONObject stop = routeStops.getJSONObject(i);
-                        stopName = stop.getString("name_en");
-                        Log.d("stops", (i+1) +". " +stopName);
-                        stopList.add((i+1) +". " +stopName);
-                    }
+                    routeStops = jsonObject.getJSONObject("data").getJSONArray("route_stops");
 
+                    if (routeStops.length() == 0){
+                        Log.d("stops", "Circular line");
+                        Toast.makeText(getActivity(),"Circular line, stops N/A for this direction", Toast.LENGTH_LONG).show();
+
+                    }else{
+                        for (int i = 0; i < routeStops.length(); i++) {
+                            JSONObject stop = routeStops.getJSONObject(i);
+                            stopName = stop.getString("name_en");
+                            Log.d("stops", (i+1) +". " +stopName);
+                            stopList.add((i+1) +". " +stopName);
+                        }
+
+                        ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, stopList);
+                        lv_stopList.setAdapter(adapter);
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, stopList);
-                lv_stopList.setAdapter(adapter);
+
 
             }
         }, new Response.ErrorListener() {

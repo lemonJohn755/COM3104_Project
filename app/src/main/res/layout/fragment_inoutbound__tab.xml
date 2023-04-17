@@ -15,6 +15,7 @@
 <!--                android:layout_height="wrap_content"-->
 <!--                android:text="Inbound"-->
 <!--                android:textAlignment="center"/>-->
+
             <ListView
                 android:id="@+id/lv_stopList"
                 android:layout_width="match_parent"

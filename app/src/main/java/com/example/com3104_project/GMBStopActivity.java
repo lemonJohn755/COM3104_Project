@@ -76,7 +76,7 @@ public class GMBStopActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                vp_bound_stop_list.setCurrentItem(tab.getPosition());
             }
         });
 

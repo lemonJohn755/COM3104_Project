@@ -49,31 +49,31 @@
             </TableRow>
         </TableLayout>
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/top_table"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:id="@+id/table_fromto">
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<!--        <TableLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/top_table"-->
+<!--            android:layout_marginLeft="8dp"-->
+<!--            android:layout_marginRight="8dp"-->
+<!--            android:id="@+id/table_fromto">-->
+<!--            <TableRow-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
 
-                <TextView
-                    android:id="@+id/tv_gmb_out_dest"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Outbound destination" />
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:id="@+id/tv_gmb_in_dest"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Inbound destination" />
-            </TableRow>
-        </TableLayout>
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_gmb_out_dest"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Outbound destination" />-->
+<!--            </TableRow>-->
+<!--            <TableRow>-->
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_gmb_in_dest"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Inbound destination" />-->
+<!--            </TableRow>-->
+<!--        </TableLayout>-->
     </LinearLayout>
     <!--    </androidx.cardview.widget.CardView>-->
 

@@ -163,7 +163,6 @@ public class GMBActivity extends AppCompatActivity implements GMBListener {
 
         mRequestQueue.add(mStringRequest);
 
-
     }
 
     private String getRouteID(String region, String route) {
@@ -224,7 +223,7 @@ public class GMBActivity extends AppCompatActivity implements GMBListener {
 
     @Override
     public void onRouteClicked(GMB gmb) {
-        Toast.makeText(this, "Route "+gmb.getRoute_code()+ " selected", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Route "+gmb.getRoute_code()+ " selected", Toast.LENGTH_SHORT).show();
         Log.d("GMB", "Route "+gmb.getRoute_code()+ " selected");
 
         // Go to BusStopListActivity
