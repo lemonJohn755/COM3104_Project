@@ -31,6 +31,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -76,7 +77,7 @@ public class NearbyTab extends Fragment implements OnMapReadyCallback, LocationL
     private Location location;
 
     ImageButton imgbt_getGPSStart;
-
+    ImageButton imgbt_search;
     Marker hereMarker;
 
 
@@ -89,11 +90,12 @@ public class NearbyTab extends Fragment implements OnMapReadyCallback, LocationL
         context = view.getContext();
 
         et_from = (EditText) view.findViewById(R.id.et_from);
-        bt_getLoc = (Button) view.findViewById(R.id.bt_getLoc);
-        bt_current = (Button) view.findViewById(R.id.bt_current);
+//        bt_getLoc = (Button) view.findViewById(R.id.bt_getLoc);
+//        bt_current = (Button) view.findViewById(R.id.bt_current);
         bt_findNearby = (Button) view.findViewById(R.id.bt_findNearby);
         spType = (Spinner) view.findViewById(R.id.sp_type);
         imgbt_getGPSStart= view.findViewById(R.id.imgbt_getGPSStart);
+        imgbt_search = view.findViewById(R.id.imgbt_search);
 
         String[] placeTypeList = {"atm", "bank", "hospital", "movie_theater", "restaurant"};
         String[] placeNameList = {"ATM", "Bank", "Hospital", "Movie Theater", "Restaurant"};
@@ -101,6 +103,8 @@ public class NearbyTab extends Fragment implements OnMapReadyCallback, LocationL
         spType.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, placeNameList));
 
         Places.initialize(context, "AIzaSyCcD7VS6fWvJq2Awc-pFW5UkRBREFfgip4");
+
+        refreshMap();
 
         bt_findNearby.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +116,8 @@ public class NearbyTab extends Fragment implements OnMapReadyCallback, LocationL
 
                 new PlaceTask().execute(url);
 
-                getNearbyPlaces();
+
+//                getNearbyPlaces();
             }
         });
 
@@ -121,32 +126,26 @@ public class NearbyTab extends Fragment implements OnMapReadyCallback, LocationL
             @Override
             public void onClick(View v) {
 
-                Log.d("Button", "Get loc button clicked");
+//                Log.d("Button", "Get loc button clicked");
                 refreshMap();
+
+                Log.d("here", "Start: lan, long => "+latitude+", "+longitude);
+
+
                 String fromAddr = reverseGeoCode(latitude, longitude);
                 et_from.setText(fromAddr);
-                Log.d("start", "Start loc: "+fromAddr);
-                Log.d("from_to", "Start: lan, long => "+latitude+", "+longitude);
-
-                refreshMap();
-
-//                LatLng latLng = new LatLng(latitude, longitude);
-//                hereMarker = mMap.addMarker(new MarkerOptions()
-//                        .position(latLng)
-//                        .title("Here"));
-//                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
 
             }
         });
 
-        bt_current.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getLocation();
-            }
-        });
+//        bt_current.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                getLocation();
+//            }
+//        });
 
-        bt_getLoc.setOnClickListener(new View.OnClickListener() {
+        imgbt_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String location = et_from.getText().toString();
@@ -168,14 +167,26 @@ public class NearbyTab extends Fragment implements OnMapReadyCallback, LocationL
         });
 
 
-
         return view;
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
+        // Remove previous markers
+        if(hereMarker != null){
+            mMap.clear();
+        }
+
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(false);
+
+        LatLng latLng = new LatLng(latitude, longitude);
+        hereMarker = mMap.addMarker(new MarkerOptions()
+                .position(latLng)
+                .title("Here")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.gps)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
 
         getLocation();
 //        getNearbyPlaces();
@@ -274,7 +285,7 @@ public class NearbyTab extends Fragment implements OnMapReadyCallback, LocationL
                 // to handle the case where the user grants the permission. See the documentation
                 // for ActivityCompat#requestPermissions for more details.
                 askPermission();
-                getLocation();
+//                getLocation();
                 return;
             }
             Log.d("Network-GPS", "isNetworkEnabled: " + isNetworkEnabled);
@@ -290,10 +301,12 @@ public class NearbyTab extends Fragment implements OnMapReadyCallback, LocationL
                     longitude = location.getLongitude();
                     Log.d("location", "GPS Provider location obtained, lat " + latitude + " lon " + longitude);
                     Toast.makeText(context, "GPS Provider location obtained", Toast.LENGTH_SHORT).show();
+
                 }
             }
         }
     }
+
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
@@ -374,6 +387,13 @@ public class NearbyTab extends Fragment implements OnMapReadyCallback, LocationL
                 options.position(latLng);
                 options.title(name);
                 mMap.addMarker(options);
+
+                hereMarker = mMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(latitude, longitude))
+                        .title("Here")
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.gps)));
+
+//                onMapReady(mMap);
             }
             super.onPostExecute(hashMaps);
         }

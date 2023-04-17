@@ -35,57 +35,71 @@
                 android:src="@drawable/my_location" />
         </RelativeLayout>
 
-
-        <EditText
-            android:id="@+id/et_from"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:layout_margin="4dp"
-            android:hint="Location"/>
-
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TableRow>
-                <Button
-                    android:id="@+id/bt_getLoc"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/et_from"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/ic_baseline_search_24"
-                    android:drawableTint="#ffffff"
-                    android:layout_gravity="right"
-                    android:text="Search"
-                    android:textStyle="normal"
-                    android:layout_weight="1"
-                    android:textSize="16dp"
-                    android:layout_margin="4dp"/>
-                <Button
-                    android:id="@+id/bt_current"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_margin="4dp"
+                    android:layout_weight="19"
+                    android:hint="Location"/>
+                <ImageButton
+                    android:id="@+id/imgbt_search"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/ic_baseline_place_24"
-                    android:drawableTint="#ffffff"
-                    android:layout_gravity="right"
-                    android:text="current"
-                    android:textSize="16dp"
-                    android:textStyle="normal"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_margin="4dp"/>
+                    android:contentDescription="Search start address"
+                    android:src="@drawable/search" />
             </TableRow>
         </TableLayout>
 
+<!--        <TableLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+<!--            <TableRow>-->
+<!--                <Button-->
+<!--                    android:id="@+id/bt_getLoc"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:drawableRight="@drawable/ic_baseline_search_24"-->
+<!--                    android:drawableTint="#ffffff"-->
+<!--                    android:layout_gravity="right"-->
+<!--                    android:text="Search"-->
+<!--                    android:textStyle="normal"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:textSize="16dp"-->
+<!--                    android:layout_margin="4dp"/>-->
+<!--                <Button-->
+<!--                    android:id="@+id/bt_current"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:drawableRight="@drawable/ic_baseline_place_24"-->
+<!--                    android:drawableTint="#ffffff"-->
+<!--                    android:layout_gravity="right"-->
+<!--                    android:text="current"-->
+<!--                    android:textSize="16dp"-->
+<!--                    android:textStyle="normal"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:layout_margin="4dp"/>-->
+<!--            </TableRow>-->
+<!--        </TableLayout>-->
+
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TableRow>
+
                 <Spinner
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:id="@+id/sp_type"
-                    android:background="@android:drawable/editbox_background"/>
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:drawable/editbox_background" />
                 <Button
                     android:id="@+id/bt_findNearby"
                     android:layout_width="wrap_content"
