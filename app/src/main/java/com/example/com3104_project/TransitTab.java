@@ -59,7 +59,6 @@ public class TransitTab extends Fragment implements OnMapReadyCallback, Location
     ImageButton imgbt_setDest;
 
     Button bt_go;
-    Button bt_swap;
     Button bt_bus;
     Button bt_gmb;
 
@@ -83,6 +82,8 @@ public class TransitTab extends Fragment implements OnMapReadyCallback, Location
     View view;
     Context context;
 
+    String fromAddr, toAddr;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -92,14 +93,13 @@ public class TransitTab extends Fragment implements OnMapReadyCallback, Location
 
         refreshMap();
 
-
         imgbt_getGPSStart = view.findViewById(R.id.imgbt_getGPSStart);
         imgbt_searchLocStart = view.findViewById(R.id.imgbt_searchLocStart);
         imgbt_setDest = view.findViewById(R.id.imgbt_setDest);
 
         et_from = view.findViewById(R.id.et_from);
 
-        String fromAddr = reverseGeoCode(fromLat, fromLon);
+        fromAddr = reverseGeoCode(fromLat, fromLon);
         et_from.setText(fromAddr);
 
         et_to = view.findViewById(R.id.et_to);
@@ -107,6 +107,8 @@ public class TransitTab extends Fragment implements OnMapReadyCallback, Location
         bt_bus = view.findViewById(R.id.bt_bus);
 
         bt_gmb = view.findViewById(R.id.bt_gmb);
+
+        bt_go = view.findViewById(R.id.bt_go);
 
         // Get current loc button with GPS
         imgbt_getGPSStart.setOnClickListener(new View.OnClickListener() {
@@ -179,7 +181,7 @@ public class TransitTab extends Fragment implements OnMapReadyCallback, Location
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(toloc, ZOOM));
 
                 // Display destination address into et_from edittext
-                String toAddr = reverseGeoCode(toLat, toLon);
+                toAddr = reverseGeoCode(toLat, toLon);
                 et_to.setText(toAddr);
 
                 Log.d("from_to", "Destination: lan, long => "+toLat+", "+toLon);
@@ -203,6 +205,28 @@ public class TransitTab extends Fragment implements OnMapReadyCallback, Location
 
                 // start the activity connect to the specified class
                 startActivity(intent);
+            }
+        });
+
+        bt_go.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (et_from.getText().toString().isEmpty() || et_to.getText().toString().isEmpty()){
+                    Toast.makeText(context, "Please input the start and destination", Toast.LENGTH_SHORT).show();
+                }else{
+                    Log.d("startDestLoc", "From:"+fromAddr + ", To:"+ toAddr +
+                            "\nfrom(lan,lon): "+fromLat+ " ,"+ fromLon +
+                            "\nto(lan, lon):" + toLat+" ,"+ toLon);
+
+                    // Save the info of start & dest loc into startDestLoc obj
+                    StartDestLoc startDestLoc = new StartDestLoc(fromLat, fromLon, toLat, toLon, fromAddr, toAddr);
+
+                    // Switch to TransitSuggestActivity
+                    Intent intent = new Intent(view.getContext(), TransitSuggestActivity.class);
+                    intent.putExtra("startDestLoc", startDestLoc);
+                    startActivity(intent);
+
+                }
             }
         });
 

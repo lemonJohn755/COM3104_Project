@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.COM3104_Project">
         <activity
+            android:name=".TransitSuggestActivity"
+            android:exported="false" />
+        <activity
             android:name=".GMBStopActivity"
             android:exported="false" />
         <activity
