@@ -102,7 +102,8 @@ public class NearbyTab extends Fragment implements OnMapReadyCallback, LocationL
 
         spType.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, placeNameList));
 
-        Places.initialize(context, "AIzaSyCcD7VS6fWvJq2Awc-pFW5UkRBREFfgip4");
+        Places.initialize(context, getString(R.string.google_maps_key));
+
 
         refreshMap();
 

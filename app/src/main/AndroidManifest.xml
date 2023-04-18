@@ -37,6 +37,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="citymapper_key"
+            android:value="@string/citymapper_key" />
 
         <activity
             android:name=".MainActivity"

@@ -28,49 +28,88 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_margin="4dp">
+            android:orientation="vertical">
 
-            <TableLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="12dp">
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp">
 
-                <TableRow>
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp">
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="From"
+                            android:textSize="14dp" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <EditText
+                            android:id="@+id/et_from"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:inputType="textMultiLine"
+                            android:singleLine="false"
+                            android:text="Start address"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="To"
+                            android:textSize="14dp" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <EditText
+                            android:id="@+id/et_to"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:singleLine="false"
+                            android:text="Destination address"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+                    </TableRow>
+                </TableLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="From"
-                        android:textSize="16dp" />
-                </TableRow>
-                <TableRow>
+                        android:text="Suggestion"
+                        android:textSize="14dp" />
 
-                    <EditText
-                        android:id="@+id/et_from"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"
-                        android:text="Start address"
-                        android:textColor="@color/black"
-                        android:textSize="20dp" />
-                </TableRow>
-                <TableRow>
-                    <TextView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="To"
-                        android:textSize="16dp" />
-                </TableRow>
-                <TableRow>
-                    <EditText
-                        android:id="@+id/et_to"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Destination address"
-                        android:textColor="@color/black"
-                        android:textSize="20dp" />
-                </TableRow>
-            </TableLayout>
+                        android:id="@+id/rv_suggestion"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
         </LinearLayout>
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 

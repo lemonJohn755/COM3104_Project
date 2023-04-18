@@ -211,7 +211,7 @@ public class TransitTab extends Fragment implements OnMapReadyCallback, Location
         bt_go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (et_from.getText().toString().isEmpty() || et_to.getText().toString().isEmpty()){
+                if (fromAddr.isEmpty() || toAddr.isEmpty()){
                     Toast.makeText(context, "Please input the start and destination", Toast.LENGTH_SHORT).show();
                 }else{
                     Log.d("startDestLoc", "From:"+fromAddr + ", To:"+ toAddr +
