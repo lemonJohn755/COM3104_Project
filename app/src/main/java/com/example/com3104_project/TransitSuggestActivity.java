@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -25,15 +27,17 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
-public class TransitSuggestActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class TransitSuggestActivity extends AppCompatActivity implements OnMapReadyCallback, SuggestionListener {
 
     StartDestLoc startDestLoc;
     String fromAddr, toAddr;
@@ -49,6 +53,11 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
 
     Marker startMarker;     // Start marker on map
     Marker destMarker;      // Destination market on map
+
+    SuggestionAdaptor suggestionAdaptor;
+    List<Suggest> suggestList = new ArrayList<>();     // ArrayList to store bus route obj
+    Suggest suggest;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +85,12 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
 
         getSuggestion(fromLat, fromLon, toLat, toLon);
 
+        // RecycleView list to display all the bus routes
+        suggestionAdaptor = new SuggestionAdaptor(getApplicationContext(), suggestList, this);
+        RecyclerView recyclerView = findViewById(R.id.rv_suggestion);
+        recyclerView.setLayoutManager((new LinearLayoutManager(this)));
+        recyclerView.setAdapter(suggestionAdaptor);
+
 
     }
 
@@ -95,19 +110,32 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
             public void onResponse(String response) {
                 Log.d("volley", "Response return:" + response);//display the response on screen
 
-                JSONObject json = null;
+                // Get value from json response
                 try {
-                    json = new JSONObject(response);
-                    JSONObject data = json.getJSONObject("data");
-                    JSONObject regions = data.getJSONObject("routes");
+                    // Parse the JSON string
+                    JsonObject jsonObject = new Gson().fromJson(response, JsonObject.class);
+
+                    // Extract the "routes" array
+                    JsonArray routesArray = jsonObject.getAsJsonArray("routes");
+
+                    JsonObject routeObject;
+                    int durationSec = 0;
+                    for (int i=0; i<routesArray.size(); i++){
+                        routeObject = routesArray.get(i).getAsJsonObject();
+                        Log.d("volley","Route "+ i+": "+routeObject.toString());
+
+                        suggest = new Suggest("Route "+(i+1), durationSec, routeObject);
+                        suggestList.add(suggest);
+                    }
 
 
-                } catch (JSONException e) {
+
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 // Update the UI change after API call
-//                gmbAdaptor.notifyDataSetChanged();
+                suggestionAdaptor.notifyDataSetChanged();
 
             }
         }, new Response.ErrorListener() {
@@ -126,7 +154,6 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
         };
 
         mRequestQueue.add(mStringRequest);
-
 
     }
 
@@ -186,5 +213,10 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onRouteClicked(Suggest suggest) {
+        Log.d("Route", "Route "+suggest.getRoute()+ " selected");
     }
 }

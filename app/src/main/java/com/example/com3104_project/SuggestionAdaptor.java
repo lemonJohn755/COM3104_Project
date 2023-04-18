@@ -35,9 +35,11 @@ public class SuggestionAdaptor extends RecyclerView.Adapter<SuggestionAdaptor.Su
     public void onBindViewHolder(@NonNull SuggestionAdaptor.SuggestionViewHolder holder, int position) {
         int pos = position;
 
-        holder.tv_route.setText("Route1_DEMO");
+        holder.tv_route.setText(items.get(pos).getRoute());
 
-        holder.tv_duration.setText("##");   // no. in min
+        int durationMin = Math.round(items.get(pos).getDurationSec()/60);
+
+        holder.tv_duration.setText(Integer.toString(durationMin));   // no. in min
 
         holder.card_suggest.setOnClickListener(new View.OnClickListener() {
             @Override
