@@ -1,19 +1,18 @@
 package com.example.com3104_project;
 
-import com.google.gson.JsonObject;
-
 import java.io.Serializable;
 
 public class Suggest implements Serializable {
     String route;
     int durationSec;
-    JsonObject routeObject;
+    String routeJson;
 
-    public Suggest(String route, int durationSec, JsonObject routeObject) {
+    public Suggest(String route, int durationSec, String routeJson) {
         this.route = route;
         this.durationSec = durationSec;
-        this.routeObject = routeObject;
+        this.routeJson = routeJson;
     }
+
 
     public String getRoute() {
         return route;
@@ -31,11 +30,11 @@ public class Suggest implements Serializable {
         this.durationSec = durationSec;
     }
 
-    public JsonObject getRouteObject() {
-        return routeObject;
+    public String getRouteJson() {
+        return routeJson;
     }
 
-    public void setRouteObject(JsonObject routeObject) {
-        this.routeObject = routeObject;
+    public void setRouteJson(String routeJson) {
+        this.routeJson = routeJson;
     }
 }

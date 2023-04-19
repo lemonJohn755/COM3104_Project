@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
@@ -42,7 +44,7 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
     StartDestLoc startDestLoc;
     String fromAddr, toAddr;
     double fromLat, fromLon, toLat, toLon;
-    float ZOOM = 10;
+    float ZOOM = 13;
 
     EditText et_from, et_to;
 
@@ -120,22 +122,24 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
 
                     JsonObject routeObject;
                     int durationSec = 0;
+                    double distanceMeter = 0;
                     for (int i=0; i<routesArray.size(); i++){
                         routeObject = routesArray.get(i).getAsJsonObject();
+                        durationSec = routeObject.get("duration_seconds").getAsInt();
+
                         Log.d("volley","Route "+ i+": "+routeObject.toString());
 
-                        suggest = new Suggest("Route "+(i+1), durationSec, routeObject);
+                        suggest = new Suggest("Route "+(i+1), durationSec, routeObject.toString());
                         suggestList.add(suggest);
                     }
 
-
+                    suggestionAdaptor.notifyDataSetChanged();
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 // Update the UI change after API call
-                suggestionAdaptor.notifyDataSetChanged();
 
             }
         }, new Response.ErrorListener() {
@@ -153,6 +157,12 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
             }
         };
 
+        mStringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                6000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+        );
+
         mRequestQueue.add(mStringRequest);
 
     }
@@ -164,22 +174,29 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
         }
         mMap = googleMap;
         // Add a marker in Sydney and move the camera
-        LatLng loc = new LatLng(fromLat, fromLon);
+        LatLng fromloc = new LatLng(fromLat, fromLon);
         Log.d("location", "showing map now " + fromLat + "::" + fromLon);
 
-        mMap.addMarker(new MarkerOptions().position(loc).title("Start"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, ZOOM));
+        mMap.addMarker(new MarkerOptions().position(fromloc).title("Start"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(fromloc));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(fromloc, ZOOM));
 
 //        mMap.getUiSettings().setZoomControlsEnabled(false);
 
 
-        loc = new LatLng(toLat, toLon);
-        mMap.addMarker(new MarkerOptions().position(loc).title("Destination")
+        LatLng toloc = new LatLng(toLat, toLon);
+        mMap.addMarker(new MarkerOptions().position(toloc).title("Destination")
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.chequered_flag)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, ZOOM));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(toloc));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(toloc, ZOOM));
         Log.d("location", "showing map now " + toLat + "::" + toLon);
+
+        // Move the camera to fit all LatLng obj
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        builder.include(fromloc);
+        builder.include(toloc);
+        LatLngBounds bounds = builder.build();
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 130), 2000, null);
 
     }
 
@@ -218,5 +235,13 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
     @Override
     public void onRouteClicked(Suggest suggest) {
         Log.d("Route", "Route "+suggest.getRoute()+ " selected");
+
+        // Go to SuggestDetailActivity
+        Intent intent = new Intent(TransitSuggestActivity.this, SuggestDetailActivity.class);
+        // start the activity connect to the specified class
+        intent.putExtra("suggest", suggest);
+        intent.putExtra("startDestLoc", startDestLoc);
+
+        startActivity(intent);
     }
 }

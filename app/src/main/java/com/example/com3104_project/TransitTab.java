@@ -91,6 +91,7 @@ public class TransitTab extends Fragment implements OnMapReadyCallback, Location
         view = inflater.inflate(R.layout.fragment_transit_tab, container, false);
         context = view.getContext();
 
+        getLastLocation();
         refreshMap();
 
         imgbt_getGPSStart = view.findViewById(R.id.imgbt_getGPSStart);
@@ -321,7 +322,7 @@ public class TransitTab extends Fragment implements OnMapReadyCallback, Location
         LatLng loc = new LatLng(fromLat, fromLon);
         Log.d("location", "showing map now " + fromLat + "::" + fromLon);
 
-        String addr = reverseGeoCode(fromLat, fromLon);         // Convert lan lon to address
+        fromAddr = reverseGeoCode(fromLat, fromLon);         // Convert lan lon to address
 
 //        startMarker = mMap.addMarker(new MarkerOptions().position(myLocation).title("Start"));
         mMap.addMarker(new MarkerOptions().position(loc).title("You're here")
