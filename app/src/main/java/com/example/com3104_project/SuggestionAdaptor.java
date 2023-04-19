@@ -56,7 +56,7 @@ public class SuggestionAdaptor extends RecyclerView.Adapter<SuggestionAdaptor.Su
 
 
     public class SuggestionViewHolder extends RecyclerView.ViewHolder{
-        TextView tv_route, tv_duration;
+        TextView tv_route, tv_duration, tv_brand_name;
         CardView card_suggest;
 
         public SuggestionViewHolder(@NonNull View itemView) {

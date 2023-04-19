@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="4dp"
+    app:cardCornerRadius="8dp"
+    android:elevation="4dp"
+    app:strokeColor="@color/black"
+    app:strokeWidth="30dp"
+    android:orientation="vertical"
+    android:id="@+id/card_suggest">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#158C52">
+                <TableRow>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:padding="8dp"
+                        android:text="1"
+                        android:textSize="16dp"
+                        android:id="@+id/tv_num"/>
+                    <TextView
+                        android:id="@+id/tv_travel_mode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#158C52"
+                        android:textColor="@color/white"
+                        android:padding="8dp"
+                        android:text="travel_mode"
+                        android:textSize="20dp"/>
+                    <TextView
+                        android:id="@+id/tv_vehicle_types"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#158C52"
+                        android:textColor="@color/white"
+                        android:padding="8dp"
+                        android:text="vehicle_types"
+                        android:textSize="20dp"/>
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/tv_brand_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:padding="8dp"
+                android:text="brand: name"
+                android:textSize="16dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_child_stops"
+                android:layout_margin="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>

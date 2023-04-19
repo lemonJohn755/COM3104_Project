@@ -150,7 +150,7 @@ public class TransitTab extends Fragment implements OnMapReadyCallback, Location
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, ZOOM));
 
                 // Display destination address into et_from edittext
-                String fromAddr = reverseGeoCode(fromLat, fromLon);
+                fromAddr = reverseGeoCode(fromLat, fromLon);
                 et_from.setText(fromAddr);
 
                 Log.d("from_to", "Start: lan, long => "+fromLat+", "+fromLon);

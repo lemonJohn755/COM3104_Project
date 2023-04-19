@@ -53,6 +53,8 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
     StringRequest mStringRequest;
     private RequestQueue mRequestQueue;
 
+    LatLng fromloc, toloc;
+
     Marker startMarker;     // Start marker on map
     Marker destMarker;      // Destination market on map
 
@@ -68,12 +70,12 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
 
         setTitle("Transit suggestion");
 
+        // Get obj for start & dest loc info resp.
+        getStartDest();
+
         // Back button on title bar
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // Get obj for start & dest loc info resp.
-        getStartDest();
 
         et_from = findViewById(R.id.et_from);
         et_to = findViewById(R.id.et_to);
@@ -83,7 +85,6 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
 
         getSuggestion(fromLat, fromLon, toLat, toLon);
 
@@ -174,7 +175,7 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
         }
         mMap = googleMap;
         // Add a marker in Sydney and move the camera
-        LatLng fromloc = new LatLng(fromLat, fromLon);
+        fromloc = new LatLng(fromLat, fromLon);
         Log.d("location", "showing map now " + fromLat + "::" + fromLon);
 
         mMap.addMarker(new MarkerOptions().position(fromloc).title("Start"));
@@ -184,7 +185,7 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
 //        mMap.getUiSettings().setZoomControlsEnabled(false);
 
 
-        LatLng toloc = new LatLng(toLat, toLon);
+        toloc = new LatLng(toLat, toLon);
         mMap.addMarker(new MarkerOptions().position(toloc).title("Destination")
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.chequered_flag)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(toloc));
@@ -215,6 +216,7 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
         Log.d("startDestLoc", "From:" + fromAddr + ", To:" + toAddr +
                 "\nfrom(lan,lon): " + fromLat + " ," + fromLon +
                 "\nto(lan, lon):" + toLat + " ," + toLon);
+
     }
 
     // Back button at title bar
