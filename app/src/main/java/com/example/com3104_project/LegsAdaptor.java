@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -15,10 +16,16 @@ public class LegsAdaptor extends RecyclerView.Adapter<LegsAdaptor.LegsViewHolder
 
     Context context;
     List<Leg> items;
+//    List<LegStop> childItems;
+
+    LegStopsAdaptor legStopsAdaptor;
+
+    RecyclerView rv_child_stops;
 
     public LegsAdaptor(Context context, List<Leg> items) {
         this.context = context;
         this.items = items;
+//        this.childItems = childItems;
     }
 
     @NonNull
@@ -41,6 +48,17 @@ public class LegsAdaptor extends RecyclerView.Adapter<LegsAdaptor.LegsViewHolder
         String brand = items.get(pos).getBrand();
         String name = items.get(pos).getName();
         holder.tv_brand_name.setText(brand+": "+name);
+
+        // Nested RecycleView list to display all stops (if available)
+        List<LegStop >lenStopList = items.get(pos).getLegStopList();
+
+        if ( lenStopList != null){
+            legStopsAdaptor = new LegStopsAdaptor(context, lenStopList);
+            RecyclerView rv_child_stops = holder.rv_child_stops;
+            rv_child_stops.setLayoutManager((new LinearLayoutManager(context)));
+            rv_child_stops.setAdapter(legStopsAdaptor);
+        }
+
 
     }
 

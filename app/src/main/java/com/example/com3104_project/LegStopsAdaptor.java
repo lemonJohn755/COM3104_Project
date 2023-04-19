@@ -9,10 +9,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 public class LegStopsAdaptor extends RecyclerView.Adapter<LegStopsAdaptor.LegsStopsViewHolder>{
 
     Context context;
+    List<LegStop> childItems;
 
+    public LegStopsAdaptor(Context context, List<LegStop> childItems) {
+        this.context = context;
+        this.childItems = childItems;
+    }
 
     @NonNull
     @Override
@@ -23,13 +30,16 @@ public class LegStopsAdaptor extends RecyclerView.Adapter<LegStopsAdaptor.LegsSt
 
     @Override
     public void onBindViewHolder(@NonNull LegsStopsViewHolder holder, int position) {
-        holder.tv_stop_name.setText("");
+        int pos = position;
+
+        String stopName = childItems.get(pos).getName();
+        holder.tv_stop_name.setText(stopName);
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return childItems.size();
     }
 
     public class LegsStopsViewHolder extends RecyclerView.ViewHolder{
@@ -38,7 +48,6 @@ public class LegStopsAdaptor extends RecyclerView.Adapter<LegStopsAdaptor.LegsSt
             super(itemView);
 
             tv_stop_name = itemView.findViewById(R.id.tv_stop_name);
-
 
         }
     }

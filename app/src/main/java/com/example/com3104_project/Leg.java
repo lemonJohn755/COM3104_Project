@@ -1,20 +1,31 @@
 package com.example.com3104_project;
 
+import java.util.List;
+
 public class Leg {
     String travel_mode;     // e.g. walk/ transit
     String duration_seconds;
     String vehicle_types;   // e.g. bus/ metro
     String brand;       // e.g. KMB/ 港鐵 MTR
     String name;        // e.g. 277E/ 屯馬綫 Tuen Ma Line
-    String stopsJsonStr;    // display in child item in RecyclerView
+    List<LegStop> legStopList;    // display in child item in nested RecyclerView
 
-    public Leg(String travel_mode, String duration_seconds, String vehicle_types, String brand, String name, String stopsJsonStr) {
+    public Leg(String travel_mode, String duration_seconds, String vehicle_types, String brand,
+               String name, List<LegStop> legStopList) {
         this.travel_mode = travel_mode;
         this.duration_seconds = duration_seconds;
         this.vehicle_types = vehicle_types;
         this.brand = brand;
         this.name = name;
-        this.stopsJsonStr = stopsJsonStr;
+        this.legStopList = legStopList;
+    }
+
+    public List<LegStop> getLegStopList() {
+        return legStopList;
+    }
+
+    public void setLegStopList(List<LegStop> legStopList) {
+        this.legStopList = legStopList;
     }
 
     public String getTravel_mode() {
@@ -57,11 +68,4 @@ public class Leg {
         this.name = name;
     }
 
-    public String getStopsJsonStr() {
-        return stopsJsonStr;
-    }
-
-    public void setStopsJsonStr(String stopsJsonStr) {
-        this.stopsJsonStr = stopsJsonStr;
-    }
 }
