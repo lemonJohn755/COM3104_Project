@@ -6,10 +6,19 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import org.json.JSONArray;
@@ -19,7 +28,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SuggestDetailActivity extends AppCompatActivity {
+public class SuggestDetailActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     Suggest suggest;
     StartDestLoc startDestLoc;
@@ -30,13 +39,23 @@ public class SuggestDetailActivity extends AppCompatActivity {
     TextView tv_duration_min, tv_summary;
     SlidingUpPanelLayout sliding_layout;
 
+    private GoogleMap mMap;
+
+    LatLng fromloc, toloc;
+
+    float ZOOM = 12;
+
+    double fromLat = 0;
+    double fromLon = 0;
+    double toLat = 0;
+    double toLon = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suggest_detail);
 
         startDestLoc = (StartDestLoc) getIntent().getSerializableExtra("startDestLoc");
-
 
         // Back button on title bar
         assert getSupportActionBar() != null;   //null check
@@ -48,7 +67,13 @@ public class SuggestDetailActivity extends AppCompatActivity {
             Log.d("suggestDetail", suggest.getRouteJson());
         }
 
+        getStartDest();
+
         setTitle(suggest.getRoute()+" detail");
+
+        // Google Map display & put markers
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         tv_duration_min = findViewById(R.id.tv_duration_min);
 
@@ -56,15 +81,7 @@ public class SuggestDetailActivity extends AppCompatActivity {
 
         tv_duration_min.setText(min+" min");
 
-//        Toast.makeText(SuggestDetailActivity.this, suggest.getRouteJson(), Toast.LENGTH_LONG).show();
-
         getLeg(suggest.getRouteJson());
-
-        //
-        //
-        // Google Map display & put markers
-        //
-        //
 
         tv_summary = findViewById(R.id.tv_summary);
         tv_summary.setText(getSummary(suggest.getRouteJson()));
@@ -74,6 +91,9 @@ public class SuggestDetailActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.rv_parent_leg);
         recyclerView.setLayoutManager((new LinearLayoutManager(this)));
         recyclerView.setAdapter(legsAdaptor);
+
+
+
 
     }
 
@@ -296,5 +316,49 @@ public class SuggestDetailActivity extends AppCompatActivity {
             }
         }
         return capitalized.toString().trim();
+    }
+
+    private void getStartDest() {
+        // Retrieve start & dest locations info from the obj.
+        startDestLoc = (StartDestLoc) getIntent().getSerializableExtra("startDestLoc");
+
+        fromLat = startDestLoc.getFromLat();
+        fromLon = startDestLoc.getFromLon();
+
+        toLat = startDestLoc.getToLat();
+        toLon = startDestLoc.getToLon();
+
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+
+        startDestLoc = (StartDestLoc) getIntent().getSerializableExtra("startDestLoc");
+
+        if (mMap != null) {
+            mMap.clear();
+        }
+
+        mMap = googleMap;
+        // Add a marker in Sydney and move the camera
+        fromloc = new LatLng(fromLat, fromLon);
+        Log.d("location", "showing map now " + fromLat + "::" + fromLon);
+        mMap.addMarker(new MarkerOptions().position(fromloc).title("Start"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(fromloc));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(fromloc, ZOOM));
+
+        toloc = new LatLng(toLat, toLon);
+        mMap.addMarker(new MarkerOptions().position(toloc).title("Destination")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.chequered_flag)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(toloc));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(toloc, ZOOM));
+        Log.d("location", "showing map now " + toLat + "::" + toLon);
+
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        builder.include(fromloc);
+        builder.include(toloc);
+        LatLngBounds bounds = builder.build();
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,400,800,0), 2000, null);
+
     }
 }
