@@ -102,12 +102,34 @@ public class SuggestDetailActivity extends AppCompatActivity {
 
                 duration_secconds = legsArray.getJSONObject(i).getInt("duration_seconds");
 
+                Log.d("leg", "dration sec: "+ duration_secconds);
+
                 travel_mode = legsArray.getJSONObject(i).getString("travel_mode");
 
+
                 if (travel_mode.equals("walk")){        // for walk
-//                    legsList.add(new Leg(travel_mode, duration_secconds, "", "",
-//                            "", null));
-                    leg = new Leg(travel_mode, duration_secconds, "", "", "", null);
+
+//                    if ( i < (legsArray.length()-1) ){   // last item in legs[]
+//                        name = legsArray.getJSONObject(i).getString("station_walk_type"); // get station_walk_type form json
+//                        Log.d("walk", "station_walk_type: "+ name);
+//                        leg = new Leg(travel_mode, duration_secconds, "", "", name, null);
+//                    }else{
+//                        leg = new Leg(travel_mode, duration_secconds, "", "", "", null);
+//                    }
+
+                    if( i != (legsArray.length()-1) && travel_mode.equals("walk")){
+                        name = legsArray.getJSONObject(i).getString("station_walk_type"); // get station_walk_type form json
+                        Log.d("walk", "station_walk_type: "+ name);
+
+                        name = name.replace("_", " ");
+
+                        leg = new Leg(travel_mode, duration_secconds, "", "", name, null);
+                    }else{
+                        leg = new Leg(travel_mode, duration_secconds, "", "", "arrive destination", null);
+                    }
+
+//                    leg = new Leg(travel_mode, duration_secconds, "", "", "", null);
+
                 }
                 else if (travel_mode.equals("transit")) {      // for transit
 

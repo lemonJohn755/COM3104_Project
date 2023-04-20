@@ -39,20 +39,30 @@ public class LegsAdaptor extends RecyclerView.Adapter<LegsAdaptor.LegsViewHolder
     public void onBindViewHolder(@NonNull LegsAdaptor.LegsViewHolder holder, int position) {
         int pos = position;
 
-        holder.tv_num.setText((pos+1) +".");
+//        holder.tv_num.setText((pos+1) +".");
+        String despcription;
+        if (items.get(pos).getTravel_mode().equals("walk")){
+            despcription = capitalizeWords(items.get(pos).getTravel_mode()) ;
+        }else{
+            despcription = capitalizeWords(items.get(pos).getTravel_mode()) +" on " + capitalizeWords(items.get(pos).getVehicle_types());
+        }
 
-        holder.tv_travel_mode.setText(items.get(pos).getTravel_mode());
+        holder.tv_travel_mode_vehicle_types.setText( despcription);
 
-        holder.tv_vehicle_types.setText(items.get(pos).getVehicle_types());
+//        holder.tv_vehicle_types.setText(items.get(pos).getVehicle_types());
 
         String brand = items.get(pos).getBrand();
         String name = items.get(pos).getName();
 
         if(items.get(pos).getTravel_mode().equals("walk")){
-            holder.tv_brand_name.setText("");
+            holder.tv_brand_name.setText(name);
         }else{
             holder.tv_brand_name.setText(brand+": "+name);
         }
+
+        String duration_min = Integer.toString(Math.round(items.get(pos).getDuration_seconds()/60));
+
+        holder.tv_duration.setText(duration_min);
 
         // Nested RecycleView list to display all stops (if available)
         List<LegStop >lenStopList = items.get(pos).getLegStopList();
@@ -72,22 +82,39 @@ public class LegsAdaptor extends RecyclerView.Adapter<LegsAdaptor.LegsViewHolder
         return items.size();
     }
 
+    public static String capitalizeWords(String str) {
+        String[] words = str.split("\\s+");
+        StringBuilder capitalized = new StringBuilder();
+        for (String word : words) {
+            if (word.length() > 0) {
+                String firstLetter = word.substring(0, 1);
+                String restOfWord = word.substring(1);
+                capitalized.append(firstLetter.toUpperCase()).append(restOfWord).append(" ");
+            }
+        }
+        return capitalized.toString().trim();
+    }
+
+
     public class LegsViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_num, tv_travel_mode, tv_vehicle_types, tv_brand_name;
+        TextView tv_num, tv_travel_mode_vehicle_types, tv_duration ,tv_brand_name;
         RecyclerView rv_child_stops;
 
         public LegsViewHolder(View itemview) {
             super(itemview);
-            tv_num = itemview.findViewById(R.id.tv_num);
+//            tv_num = itemview.findViewById(R.id.tv_num);
 
-            tv_travel_mode = itemview.findViewById(R.id.tv_travel_mode);
+            tv_travel_mode_vehicle_types = itemview.findViewById(R.id.tv_travel_mode_vehicle_types);
 
-            tv_vehicle_types = itemview.findViewById(R.id.tv_vehicle_types);
+//            tv_vehicle_types = itemview.findViewById(R.id.tv_vehicle_types);
 
             tv_brand_name = itemview.findViewById(R.id.tv_brand_name);
+
+            tv_duration = itemview.findViewById(R.id.tv_duration);
 
             rv_child_stops = itemview.findViewById(R.id.rv_child_stops);
 
         }
     }
+
 }

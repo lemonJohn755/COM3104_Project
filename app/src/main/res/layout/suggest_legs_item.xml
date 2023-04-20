@@ -17,51 +17,86 @@
             android:orientation="vertical">
             <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="#158C52">
                 <TableRow>
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:padding="8dp"-->
+<!--                        android:text="1"-->
+<!--                        android:textSize="16dp"-->
+<!--                        android:layout_weight="0"-->
+<!--                        android:id="@+id/tv_num"/>-->
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:padding="8dp"
-                        android:text="1"
-                        android:textSize="16dp"
-                        android:id="@+id/tv_num"/>
-                    <TextView
-                        android:id="@+id/tv_travel_mode"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_travel_mode_vehicle_types"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="#158C52"
                         android:textColor="@color/white"
                         android:padding="8dp"
-                        android:text="travel_mode"
+                        android:textAlignment="textStart"
+                        android:text="travel_mode vehicle_types"
+                        android:layout_weight="3"
                         android:textSize="20dp"/>
+<!--                    <TextView-->
+<!--                        android:id="@+id/tv_vehicle_types"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:background="#158C52"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:padding="8dp"-->
+<!--                        android:text="vehicle_types"-->
+<!--                        android:layout_weight="3"-->
+<!--                        android:textSize="20dp"/>-->
+
                     <TextView
-                        android:id="@+id/tv_vehicle_types"
+                        android:id="@+id/tv_duration"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="#158C52"
-                        android:textColor="@color/white"
+                        android:layout_gravity="right"
                         android:padding="8dp"
-                        android:text="vehicle_types"
+                        android:text="##"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:layout_weight="0"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0"
+                        android:layout_gravity="right"
+                        android:gravity="right"
+                        android:padding="8dp"
+                        android:textColor="@color/white"
+                        android:text="min"
                         android:textSize="20dp"/>
                 </TableRow>
             </TableLayout>
 
-            <TextView
-                android:id="@+id/tv_brand_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:padding="8dp"
-                android:text="brand: name"
-                android:textSize="16dp"/>
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TableRow>
+                    <TextView
+                        android:id="@+id/tv_brand_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:padding="8dp"
+                        android:text="brand: name"
+                        android:textSize="16dp"/>
+                </TableRow>
+            </TableLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_child_stops"
-                android:layout_margin="6dp"
-                android:layout_width="220dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>

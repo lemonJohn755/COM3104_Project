@@ -198,7 +198,7 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
         builder.include(fromloc);
         builder.include(toloc);
         LatLngBounds bounds = builder.build();
-        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 130), 2000, null);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 180), 1000, null);
 
     }
 
