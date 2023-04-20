@@ -82,7 +82,8 @@ public class TransitTab extends Fragment implements OnMapReadyCallback, Location
     View view;
     Context context;
 
-    String fromAddr, toAddr;
+    String fromAddr = "";
+    String toAddr = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -212,21 +213,25 @@ public class TransitTab extends Fragment implements OnMapReadyCallback, Location
         bt_go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (fromAddr.isEmpty() || toAddr.isEmpty()){
+                try {
+                    if (fromAddr.equals("") || toAddr.equals("")) {
+                        Toast.makeText(context, "Please input the start and destination", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.d("startDestLoc", "From:" + fromAddr + ", To:" + toAddr +
+                                "\nfrom(lan,lon): " + fromLat + " ," + fromLon +
+                                "\nto(lan, lon):" + toLat + " ," + toLon);
+
+                        // Save the info of start & dest loc into startDestLoc obj
+                        StartDestLoc startDestLoc = new StartDestLoc(fromLat, fromLon, toLat, toLon, fromAddr, toAddr);
+
+                        // Switch to TransitSuggestActivity
+                        Intent intent = new Intent(view.getContext(), TransitSuggestActivity.class);
+                        intent.putExtra("startDestLoc", startDestLoc);
+                        startActivity(intent);
+
+                    }
+                }catch (Exception e){
                     Toast.makeText(context, "Please input the start and destination", Toast.LENGTH_SHORT).show();
-                }else{
-                    Log.d("startDestLoc", "From:"+fromAddr + ", To:"+ toAddr +
-                            "\nfrom(lan,lon): "+fromLat+ " ,"+ fromLon +
-                            "\nto(lan, lon):" + toLat+" ,"+ toLon);
-
-                    // Save the info of start & dest loc into startDestLoc obj
-                    StartDestLoc startDestLoc = new StartDestLoc(fromLat, fromLon, toLat, toLon, fromAddr, toAddr);
-
-                    // Switch to TransitSuggestActivity
-                    Intent intent = new Intent(view.getContext(), TransitSuggestActivity.class);
-                    intent.putExtra("startDestLoc", startDestLoc);
-                    startActivity(intent);
-
                 }
             }
         });
