@@ -104,7 +104,7 @@ public class SuggestDetailActivity extends AppCompatActivity {
 
                 travel_mode = legsArray.getJSONObject(i).getString("travel_mode");
 
-                if (travel_mode.equals("walk")){
+                if (travel_mode.equals("walk")){        // for walk
 //                    legsList.add(new Leg(travel_mode, duration_secconds, "", "",
 //                            "", null));
                     leg = new Leg(travel_mode, duration_secconds, "", "", "", null);
@@ -137,7 +137,8 @@ public class SuggestDetailActivity extends AppCompatActivity {
                         brand = "";
                         name = "";
                     }
-                    leg = new Leg(travel_mode, duration_secconds, vehicle_types, brand, name, childrenStopList(jsonStr));
+
+                    leg = new Leg(travel_mode, duration_secconds, vehicle_types, brand, name, childrenStopList(jsonStr, i));
                 }
 
                 Log.d("leg", "leg "+i+") "+travel_mode+": vehicle_types: "+ vehicle_types+ " brand: "+brand+ " name: "+name);
@@ -153,7 +154,7 @@ public class SuggestDetailActivity extends AppCompatActivity {
     }
 
     // Get stop[i]
-    public List<LegStop> childrenStopList(String jsonStr){
+    public List<LegStop> childrenStopList(String stopJson, int legPos){
         List<LegStop> legStopsList = new ArrayList<>();    // Child list for stops (if hv stops in leg obj)
 
         // DEMO stops display
@@ -164,9 +165,34 @@ public class SuggestDetailActivity extends AppCompatActivity {
 //        legStopsList.add(new LegStop("元朗 Yuen Long", 22.446038, 114.035385));
 //        legStopsList.add(new LegStop("錦上路 Kam Sheung Road", 22.434712, 114.063412));
 
-        //
-        // Get value from json here
-        //
+        // Get stop list from json
+        try {
+            JSONObject jsonObj =  new JSONObject(stopJson);
+            JSONArray jsonArr = jsonObj.getJSONArray("legs").getJSONObject(legPos).getJSONArray("stops");
+
+            Log.d("StopsArray", jsonArr.toString());
+
+            String name;
+            double codLat, codLon;
+
+            for(int i=0; i<jsonArr.length(); i++){
+
+                name = jsonArr.getJSONObject(i).getString("name");
+
+                codLat = jsonArr.getJSONObject(i).getJSONObject("coordinates").getDouble("lat");
+
+                codLon = jsonArr.getJSONObject(i).getJSONObject("coordinates").getDouble("lon");
+
+                Log.d("StopList","name: "+ name + "| lat, lon: "+ codLat + ", "+ codLon);
+
+                // add to return list
+                legStopsList.add(new LegStop(name, codLat, codLon));
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         return legStopsList;
     }
