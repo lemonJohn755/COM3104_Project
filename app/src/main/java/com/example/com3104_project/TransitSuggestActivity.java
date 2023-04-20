@@ -179,7 +179,8 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
         fromloc = new LatLng(fromLat, fromLon);
         Log.d("location", "showing map now " + fromLat + "::" + fromLon);
 
-        mMap.addMarker(new MarkerOptions().position(fromloc).title("Start"));
+        mMap.addMarker(new MarkerOptions().position(fromloc).title("Start")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.direction)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(fromloc));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(fromloc, ZOOM));
 
@@ -198,7 +199,7 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
         builder.include(fromloc);
         builder.include(toloc);
         LatLngBounds bounds = builder.build();
-        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 180), 1000, null);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 900,900,120), 1000, null);
 
     }
 

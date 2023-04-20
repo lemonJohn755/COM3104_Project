@@ -35,7 +35,7 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
     LegsAdaptor legsAdaptor;
     LegStopsAdaptor legStopsAdaptor;
     List<Leg> legsList = new ArrayList<>();     // Parent list for legs
-    List<LegStop> legStopsList = new ArrayList<>();    // Child list for stops (if hv stops in leg obj)
+    List<LegStop> MarkersList = new ArrayList<>();
 
 
     TextView tv_duration_min, tv_summary;
@@ -93,9 +93,6 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
         RecyclerView recyclerView = findViewById(R.id.rv_parent_leg);
         recyclerView.setLayoutManager((new LinearLayoutManager(this)));
         recyclerView.setAdapter(legsAdaptor);
-
-
-
 
     }
 
@@ -189,19 +186,19 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
 
                 if (travel_mode.equals("walk")){        // for walk
 
-                    if (i == (legsArray.length()-1)){
+                    if ( (i+1) == legsArray.length()){
                         leg = new Leg(travel_mode, duration_secconds, "", "", "walk to destination", null);
                     }
                     else if (i==0) {
                         leg = new Leg(travel_mode, duration_secconds, "", "", "walk to station/stop", null);
                     }
                     else if (legsArray.getJSONObject(i+1).getString("travel_mode").equals("transit")){
-                        leg = new Leg(travel_mode, duration_secconds, "", "", "switch bus route/ metro line", null);
+                        leg = new Leg(travel_mode, duration_secconds, "", "", "switch bus route/ metro line/ other transport", null);
                     }
                     else{
                         leg = new Leg(travel_mode, duration_secconds, "", "", "", null);
                     }
-
+//                    leg = new Leg(travel_mode, duration_secconds, "", "", "", null);
                 }
                 else if (travel_mode.equals("transit")) {      // for transit
 
@@ -250,6 +247,8 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
     // Get stop[i]
     public List<LegStop> childrenStopList(String stopJson, int legPos){
 
+        List<LegStop> legStopsList = new ArrayList<>();    // Child list for stops (if hv stops in leg obj)
+
         // DEMO stops display
 //        legStopsList.add(new LegStop("屯門 Tuen Mun", 22.395268, 113.973088));
 //        legStopsList.add(new LegStop("兆康 Siu Hong", 22.411856, 113.978843));
@@ -263,7 +262,7 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
             JSONObject jsonObj =  new JSONObject(stopJson);
             JSONArray jsonArr = jsonObj.getJSONArray("legs").getJSONObject(legPos).getJSONArray("stops");
 
-            Log.d("StopsArray", jsonArr.toString());
+            Log.d("StopsArray", jsonArr.length()+ " "+jsonArr.toString());
 
             String name;
             double codLat, codLon;
@@ -280,6 +279,8 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
 
                 // add to return list
                 legStopsList.add(new LegStop(name, codLat, codLon));
+                MarkersList.add(new LegStop(name, codLat, codLon));
+                Log.d("StopsArray", "legStopsList size: "+legStopsList.size());
 
             }
 
@@ -344,7 +345,8 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
         // Add a marker in Sydney and move the camera
         fromloc = new LatLng(fromLat, fromLon);
         Log.d("location", "showing map now " + fromLat + "::" + fromLon);
-        mMap.addMarker(new MarkerOptions().position(fromloc).title("Start"));
+        mMap.addMarker(new MarkerOptions().position(fromloc).title("Start")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.direction)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(fromloc));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(fromloc, ZOOM));
 
@@ -359,16 +361,27 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
         builder.include(fromloc);
         builder.include(toloc);
         LatLngBounds bounds = builder.build();
-        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,400,800,0), 2000, null);
+//        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,400,800,0), 2000, null);
 
         String name;
         double codLat, codLon;
-        for(LegStop i: legStopsList){
+        List<LatLng> stopCods = new ArrayList<>();
+        stopCods.add(fromloc);
+        stopCods.add(toloc);
+
+        // Assign markers for all stops
+
+        for(LegStop i: MarkersList){
             name = i.getName();
             codLat = i.getCodLat();
             codLon = i.getCodLon();
             Log.d("stopPin",name +" " + codLat+ ","+ codLon);
+            mMap.addMarker(new MarkerOptions().position(new LatLng(codLat, codLon)).title(name));
+            builder.include(new LatLng(codLat, codLon));
         }
+
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,900,900,20), 2000, null);
+
 
     }
 }
