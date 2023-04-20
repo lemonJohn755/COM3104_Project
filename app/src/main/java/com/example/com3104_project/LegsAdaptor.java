@@ -47,7 +47,12 @@ public class LegsAdaptor extends RecyclerView.Adapter<LegsAdaptor.LegsViewHolder
 
         String brand = items.get(pos).getBrand();
         String name = items.get(pos).getName();
-        holder.tv_brand_name.setText(brand+": "+name);
+
+        if(items.get(pos).getTravel_mode().equals("walk")){
+            holder.tv_brand_name.setText("");
+        }else{
+            holder.tv_brand_name.setText(brand+": "+name);
+        }
 
         // Nested RecycleView list to display all stops (if available)
         List<LegStop >lenStopList = items.get(pos).getLegStopList();

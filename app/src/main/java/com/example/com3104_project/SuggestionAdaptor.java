@@ -1,6 +1,7 @@
 package com.example.com3104_project;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public class SuggestionAdaptor extends RecyclerView.Adapter<SuggestionAdaptor.Su
             @Override
             public void onClick(View view) {
                 suggestionListener.onRouteClicked(items.get(pos));
+                Log.d("select", "select: "+items.get(pos).getRouteJson());
             }
         });
     }

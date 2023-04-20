@@ -111,6 +111,7 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
         mStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+
                 Log.d("volley", "Response return:" + response);//display the response on screen
 
                 // Get value from json response
@@ -124,23 +125,22 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
                     JsonObject routeObject;
                     int durationSec = 0;
                     double distanceMeter = 0;
-                    for (int i=0; i<routesArray.size(); i++){
+                    for (int i=0; i < routesArray.size(); i++){
                         routeObject = routesArray.get(i).getAsJsonObject();
                         durationSec = routeObject.get("duration_seconds").getAsInt();
 
-                        Log.d("volley","Route "+ i+": "+routeObject.toString());
+                        Log.d("vRoute","Route "+ i+": "+routeObject.toString());
 
-                        suggest = new Suggest("Route "+(i+1), durationSec, routeObject.toString());
-                        suggestList.add(suggest);
+//                        suggest = new Suggest("Route "+(i+1), durationSec, routeObject.toString());
+                        suggestList.add(new Suggest("Route "+(i+1), durationSec, routeObject.toString()));
                     }
-
-                    suggestionAdaptor.notifyDataSetChanged();
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 // Update the UI change after API call
+                suggestionAdaptor.notifyDataSetChanged();
 
             }
         }, new Response.ErrorListener() {
@@ -154,6 +154,7 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Citymapper-Partner-Key", getString(R.string.citymapper_key));
+                params.put("Content-Type", "application/json; charset=utf-8");
                 return params;
             }
         };

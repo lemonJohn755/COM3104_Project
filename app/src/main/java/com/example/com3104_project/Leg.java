@@ -4,13 +4,13 @@ import java.util.List;
 
 public class Leg {
     String travel_mode;     // e.g. walk/ transit
-    String duration_seconds;
+    int duration_seconds;
     String vehicle_types;   // e.g. bus/ metro
     String brand;       // e.g. KMB/ 港鐵 MTR
     String name;        // e.g. 277E/ 屯馬綫 Tuen Ma Line
     List<LegStop> legStopList;    // display in child item in nested RecyclerView
 
-    public Leg(String travel_mode, String duration_seconds, String vehicle_types, String brand,
+    public Leg(String travel_mode, int duration_seconds, String vehicle_types, String brand,
                String name, List<LegStop> legStopList) {
         this.travel_mode = travel_mode;
         this.duration_seconds = duration_seconds;
@@ -36,11 +36,11 @@ public class Leg {
         this.travel_mode = travel_mode;
     }
 
-    public String getDuration_seconds() {
+    public int getDuration_seconds() {
         return duration_seconds;
     }
 
-    public void setDuration_seconds(String duration_seconds) {
+    public void setDuration_seconds(int duration_seconds) {
         this.duration_seconds = duration_seconds;
     }
 
