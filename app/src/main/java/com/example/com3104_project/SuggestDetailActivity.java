@@ -35,6 +35,8 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
     LegsAdaptor legsAdaptor;
     LegStopsAdaptor legStopsAdaptor;
     List<Leg> legsList = new ArrayList<>();     // Parent list for legs
+    List<LegStop> legStopsList = new ArrayList<>();    // Child list for stops (if hv stops in leg obj)
+
 
     TextView tv_duration_min, tv_summary;
     SlidingUpPanelLayout sliding_layout;
@@ -247,7 +249,6 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
 
     // Get stop[i]
     public List<LegStop> childrenStopList(String stopJson, int legPos){
-        List<LegStop> legStopsList = new ArrayList<>();    // Child list for stops (if hv stops in leg obj)
 
         // DEMO stops display
 //        legStopsList.add(new LegStop("屯門 Tuen Mun", 22.395268, 113.973088));
@@ -359,6 +360,15 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
         builder.include(toloc);
         LatLngBounds bounds = builder.build();
         mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,400,800,0), 2000, null);
+
+        String name;
+        double codLat, codLon;
+        for(LegStop i: legStopsList){
+            name = i.getName();
+            codLat = i.getCodLat();
+            codLon = i.getCodLon();
+            Log.d("stopPin",name +" " + codLat+ ","+ codLon);
+        }
 
     }
 }
