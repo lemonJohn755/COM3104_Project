@@ -27,7 +27,7 @@ public class SuggestDetailActivity extends AppCompatActivity {
     LegStopsAdaptor legStopsAdaptor;
     List<Leg> legsList = new ArrayList<>();     // Parent list for legs
 
-    TextView tv_duration_min;
+    TextView tv_duration_min, tv_summary;
     SlidingUpPanelLayout sliding_layout;
 
     @Override
@@ -66,12 +66,71 @@ public class SuggestDetailActivity extends AppCompatActivity {
         //
         //
 
+        tv_summary = findViewById(R.id.tv_summary);
+        tv_summary.setText(getSummary(suggest.getRouteJson()));
+
         // RecycleView list to display all legs
         legsAdaptor = new LegsAdaptor(getApplicationContext(), legsList);
         RecyclerView recyclerView = findViewById(R.id.rv_parent_leg);
         recyclerView.setLayoutManager((new LinearLayoutManager(this)));
         recyclerView.setAdapter(legsAdaptor);
 
+    }
+
+    private String getSummary(String jsonStr) {
+        String summary = "";
+
+        String travel_mode = "";
+        int duration_secconds = 0;
+        String vehicle_types = "";
+
+        // Get legs[i]
+        // Assuming the JSON code is stored in a String variable called jsonStr
+        JSONObject legJsonObj = null;
+        try {
+            legJsonObj = new JSONObject(jsonStr);
+
+            JSONArray legsArray = legJsonObj.getJSONArray("legs");
+
+            for (int i=0; i<legsArray.length(); i++){
+
+                Log.d("leg", "legsArray: " + legsArray.getString(i));
+
+                duration_secconds = legsArray.getJSONObject(i).getInt("duration_seconds");
+
+                Log.d("leg", "dration sec: "+ duration_secconds);
+
+                travel_mode = legsArray.getJSONObject(i).getString("travel_mode");
+
+                if (travel_mode.equals("walk")){        // for walk
+                    summary = summary + " "+ "walk";
+                }
+                else if (travel_mode.equals("transit")) {      // for transit
+
+                    Log.d("leg", legsArray.getJSONObject(i).getJSONArray("services").toString());
+
+                    if (legsArray.getJSONObject(i).getJSONArray("services").length() > 0) {
+
+                        JSONObject json = new JSONObject(jsonStr); // jsonString is your JSON string
+                        JSONArray vehicleTypes = legsArray.getJSONObject(i).getJSONArray("services")
+                                .getJSONObject(0)
+                                .getJSONArray("vehicle_types");
+
+                        vehicle_types = vehicleTypes.getString(0);
+                        Log.d("leg", "vehicle_types: "+vehicle_types);
+
+                        summary = summary + " "+ vehicle_types;
+
+                    }
+                }
+                Log.d("legSummary", "summary: "+ summary);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return capitalizeWords(summary);
     }
 
     // Get legs from json string in suggest obj
@@ -106,29 +165,20 @@ public class SuggestDetailActivity extends AppCompatActivity {
 
                 travel_mode = legsArray.getJSONObject(i).getString("travel_mode");
 
-
                 if (travel_mode.equals("walk")){        // for walk
 
-//                    if ( i < (legsArray.length()-1) ){   // last item in legs[]
-//                        name = legsArray.getJSONObject(i).getString("station_walk_type"); // get station_walk_type form json
-//                        Log.d("walk", "station_walk_type: "+ name);
-//                        leg = new Leg(travel_mode, duration_secconds, "", "", name, null);
-//                    }else{
-//                        leg = new Leg(travel_mode, duration_secconds, "", "", "", null);
-//                    }
-
-                    if( i != (legsArray.length()-1) && travel_mode.equals("walk")){
-                        name = legsArray.getJSONObject(i).getString("station_walk_type"); // get station_walk_type form json
-                        Log.d("walk", "station_walk_type: "+ name);
-
-                        name = name.replace("_", " ");
-
-                        leg = new Leg(travel_mode, duration_secconds, "", "", name, null);
-                    }else{
-                        leg = new Leg(travel_mode, duration_secconds, "", "", "arrive destination", null);
+                    if (i == (legsArray.length()-1)){
+                        leg = new Leg(travel_mode, duration_secconds, "", "", "walk to destination", null);
                     }
-
-//                    leg = new Leg(travel_mode, duration_secconds, "", "", "", null);
+                    else if (i==0) {
+                        leg = new Leg(travel_mode, duration_secconds, "", "", "walk to station/stop", null);
+                    }
+                    else if (legsArray.getJSONObject(i+1).getString("travel_mode").equals("transit")){
+                        leg = new Leg(travel_mode, duration_secconds, "", "", "switch bus route/ metro line", null);
+                    }
+                    else{
+                        leg = new Leg(travel_mode, duration_secconds, "", "", "", null);
+                    }
 
                 }
                 else if (travel_mode.equals("transit")) {      // for transit
@@ -233,5 +283,18 @@ public class SuggestDetailActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public static String capitalizeWords(String str) {
+        String[] words = str.split("\\s+");
+        StringBuilder capitalized = new StringBuilder();
+        for (String word : words) {
+            if (word.length() > 0) {
+                String firstLetter = word.substring(0, 1);
+                String restOfWord = word.substring(1);
+                capitalized.append(firstLetter.toUpperCase()).append(restOfWord).append(" ");
+            }
+        }
+        return capitalized.toString().trim();
     }
 }
