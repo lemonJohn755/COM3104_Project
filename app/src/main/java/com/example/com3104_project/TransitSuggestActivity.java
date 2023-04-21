@@ -13,11 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,9 +30,11 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -94,7 +96,6 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
         recyclerView.setLayoutManager((new LinearLayoutManager(this)));
         recyclerView.setAdapter(suggestionAdaptor);
 
-
     }
 
     private void getSuggestion(double fromLat, double fromLon, double toLat, double toLon) {
@@ -108,26 +109,33 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
         mRequestQueue = Volley.newRequestQueue(this);
 
         // String Request initialized
-        mStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(JSONObject response) {
+
+//                response = toUTF8(response);
 
                 Log.d("volley", "Response return:" + response);//display the response on screen
 
-                // Get value from json response
+                    // Get value from json response
                 try {
                     // Parse the JSON string
-                    JsonObject jsonObject = new Gson().fromJson(response, JsonObject.class);
+//                    JsonObject jsonObject = new Gson().fromJson(response, JsonObject.class);
+                    JSONObject jsonObject = response;
 
                     // Extract the "routes" array
-                    JsonArray routesArray = jsonObject.getAsJsonArray("routes");
+//                    JsonArray routesArray = jsonObject.getAsJsonArray("routes");
+                    JSONArray routesArray = jsonObject.getJSONArray("routes");
 
-                    JsonObject routeObject;
+//                    JsonObject routeObject;
+                    JSONObject routeObject;
                     int durationSec = 0;
                     double distanceMeter = 0;
-                    for (int i=0; i < routesArray.size(); i++){
-                        routeObject = routesArray.get(i).getAsJsonObject();
-                        durationSec = routeObject.get("duration_seconds").getAsInt();
+                    for (int i=0; i < routesArray.length(); i++){
+//                        routeObject = routesArray.get(i).getAsJsonObject();
+                        routeObject = routesArray.getJSONObject(i);
+//                        durationSec = routeObject.get("duration_seconds").getAsInt();
+                        durationSec = routeObject.getInt("duration_seconds");
 
                         Log.d("vRoute","Route "+ i+": "+routeObject.toString());
 
@@ -159,14 +167,42 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
             }
         };
 
-        mStringRequest.setRetryPolicy(new DefaultRetryPolicy(
-                6000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
-        );
+//        mStringRequest.setRetryPolicy(new DefaultRetryPolicy(
+//                0,
+//                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+//                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+//        );
 
-        mRequestQueue.add(mStringRequest);
+        mRequestQueue.add(jsonObjectRequest);
 
+    }
+
+    private String toUTF8(String response) {
+
+        // Create Gson object
+        Gson gson = new Gson();
+
+// Create object to be serialized
+//        MyObject myObject = new MyObject();
+
+// Serialize object to JSON string
+        String jsonString = gson.toJson(response);
+
+// Get bytes of UTF-8 encoding
+        byte[] utf8Bytes = new byte[0];
+        String utf8String = "";
+
+        try {
+            utf8Bytes = jsonString.getBytes("UTF-8");
+            utf8String = new String(utf8Bytes, "UTF-8");
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        Log.d("utf8Str", utf8String);
+
+        return utf8String;
     }
 
     @Override
@@ -180,7 +216,7 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
         Log.d("location", "showing map now " + fromLat + "::" + fromLon);
 
         mMap.addMarker(new MarkerOptions().position(fromloc).title("Start")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.direction)));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.direction2)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(fromloc));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(fromloc, ZOOM));
 
@@ -247,5 +283,8 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
         intent.putExtra("startDestLoc", startDestLoc);
 
         startActivity(intent);
+    }
+
+    private class MyObject {
     }
 }

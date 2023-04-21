@@ -346,7 +346,7 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
         fromloc = new LatLng(fromLat, fromLon);
         Log.d("location", "showing map now " + fromLat + "::" + fromLon);
         mMap.addMarker(new MarkerOptions().position(fromloc).title("Start")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.direction)));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.direction2)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(fromloc));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(fromloc, ZOOM));
 
