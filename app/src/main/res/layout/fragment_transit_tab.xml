@@ -95,30 +95,15 @@
 
                 <Button
                     android:id="@+id/bt_go"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:drawableRight="@drawable/commute"
+                    android:padding="10dp"
+                    android:drawableRight="@drawable/nav"
                     android:drawableTint="#ffffff"
                     android:text="Go"
                     android:textSize="24sp"
                     android:textStyle="normal" />
-
-                <!--                <TableRow>-->
-                <!--                    <Button-->
-                <!--                        android:id="@+id/bt_swap"-->
-                <!--                        android:drawableRight="@drawable/swap_vert"-->
-                <!--                        android:drawableTint="#ffffff"-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:layout_marginLeft="20dp"-->
-                <!--                        android:layout_gravity="right"-->
-                <!--                        android:backgroundTint="@android:color/tertiary_text_light"-->
-                <!--                        android:text="Swap"-->
-                <!--                        android:textSize="12sp"/>-->
-
-                <!--                </TableRow>-->
-                <!--            </TableLayout>-->
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/box_container"
@@ -135,40 +120,33 @@
                             <Button
                                 android:id="@+id/bt_bus"
                                 android:layout_width="80dp"
-                                android:layout_height="80dp"
+                                android:layout_height="wrap_content"
                                 android:layout_marginLeft="4dp"
                                 android:layout_marginRight="4dp"
+                                android:padding="4dp"
                                 android:layout_weight="1"
-                                android:drawableTop="@drawable/transit_bus"
+                                android:drawableRight="@drawable/ic_double_decker"
                                 android:drawableTint="#ffffff"
+                                android:backgroundTint="@color/deep_grey"
                                 android:text="Bus"
-                                android:textSize="12sp" />
-
-                            <!--                                <Button-->
-                            <!--                                    android:id="@+id/bt_mtr"-->
-                            <!--                                    android:layout_width="80dp"-->
-                            <!--                                    android:layout_height="80dp"-->
-                            <!--                                    android:layout_marginLeft="4dp"-->
-                            <!--                                    android:layout_marginRight="4dp"-->
-                            <!--                                    android:layout_weight="1"-->
-                            <!--                                    android:drawableTop="@drawable/transit_subway"-->
-                            <!--                                    android:drawablePadding="4dp"-->
-                            <!--                                    android:drawableTint="#ffffff"-->
-                            <!--                                    android:text="MTR"-->
-                            <!--                                    android:textSize="12sp" />-->
+                                android:textAllCaps="false"
+                                android:textSize="16sp" />
 
                             <Button
                                 android:id="@+id/bt_gmb"
                                 android:layout_width="80dp"
-                                android:layout_height="80dp"
+                                android:layout_height="wrap_content"
                                 android:layout_marginLeft="4dp"
                                 android:layout_marginRight="4dp"
+                                android:padding="4dp"
                                 android:layout_weight="1"
-                                android:drawableTop="@drawable/transit_bus"
-                                android:drawableTint="#ffffff"
+                                android:drawableRight="@drawable/transit_bus"
+                                android:drawableTint="#CFEDCA"
+                                android:backgroundTint="@color/deep_grey"
                                 android:singleLine="true"
                                 android:text="Green Minibus"
-                                android:textSize="12sp" />
+                                android:textAllCaps="false"
+                                android:textSize="16sp" />
 
                         </TableRow>
                     </TableLayout>

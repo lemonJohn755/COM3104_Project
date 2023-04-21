@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,6 +54,12 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
     double toLat = 0;
     double toLon = 0;
 
+    LinearLayout layout_icon;
+    ImageView imageView;
+
+    int iconW = 96;
+    int iconH = 96;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +92,8 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
         tv_duration_min.setText(min+" min");
 
         getLeg(suggest.getRouteJson());
+
+        layout_icon = findViewById(R.id.layout_icon);
 
         tv_summary = findViewById(R.id.tv_summary);
         tv_summary.setText(getSummary(suggest.getRouteJson()));
@@ -123,6 +133,11 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
 
                 if (travel_mode.equals("walk")){        // for walk
                     summary = summary + " "+ "walk";
+
+                    imageView = new ImageView(SuggestDetailActivity.this);
+                    imageView.setImageResource(R.drawable.ic_baseline_directions_walk_24);
+                    imageView.setColorFilter(SuggestDetailActivity.this.getResources().getColor(R.color.white));
+                    addView(imageView, iconW, iconW);
                 }
                 else if (travel_mode.equals("transit")) {      // for transit
 
@@ -140,7 +155,21 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
 
                         summary = summary + " "+ vehicle_types;
 
+
+                        if (vehicle_types.equals("bus")){
+                            imageView = new ImageView(SuggestDetailActivity.this);
+                            imageView.setImageResource(R.drawable.ic_double_decker_24);
+                        }else if (vehicle_types.equals("metro")){
+                            imageView = new ImageView(SuggestDetailActivity.this);
+                            imageView.setImageResource(R.drawable.ic_baseline_subway_24);
+                        }else if (vehicle_types.equals("ferry")){
+                            imageView = new ImageView(SuggestDetailActivity.this);
+                            imageView.setImageResource(R.drawable.ic_baseline_directions_boat_24);
+                        }
+                        imageView.setColorFilter(SuggestDetailActivity.this.getResources().getColor(R.color.white));
+
                     }
+                    addView(imageView, iconW, iconH);
                 }
                 Log.d("legSummary", "summary: "+ summary);
             }
@@ -150,6 +179,17 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
         }
 
         return capitalizeWords(summary);
+    }
+
+    private void addView(ImageView imageView, int w, int h) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(w, h);
+
+        // setting the margin in linearlayout
+        params.setMargins(0, 10, 10, 0);
+        imageView.setLayoutParams(params);
+
+        // adding the image in layout
+        layout_icon.addView(imageView);
     }
 
     // Get legs from json string in suggest obj
@@ -380,7 +420,7 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
             builder.include(new LatLng(codLat, codLon));
         }
 
-        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,900,900,20), 2000, null);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,900,900,50), 2000, null);
 
 
     }

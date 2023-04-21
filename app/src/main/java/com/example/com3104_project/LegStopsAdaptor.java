@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -44,8 +45,11 @@ public class LegStopsAdaptor extends RecyclerView.Adapter<LegStopsAdaptor.LegsSt
 
     public class LegsStopsViewHolder extends RecyclerView.ViewHolder{
         TextView tv_stop_name;
+        ImageView im_stop;
         public LegsStopsViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            im_stop = itemView.findViewById(R.id.im_stop);
 
             tv_stop_name = itemView.findViewById(R.id.tv_stop_name);
 

@@ -12,6 +12,7 @@
             android:layout_height="wrap_content">
             <TableRow>
                 <ImageView
+                    android:id="@+id/im_stop"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     app:srcCompat="@drawable/ic_baseline_stop_circle_24"/>

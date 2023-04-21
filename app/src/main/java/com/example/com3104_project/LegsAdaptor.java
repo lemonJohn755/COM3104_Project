@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,10 +55,22 @@ public class LegsAdaptor extends RecyclerView.Adapter<LegsAdaptor.LegsViewHolder
         String brand = items.get(pos).getBrand();
         String name = items.get(pos).getName();
 
-        if(items.get(pos).getTravel_mode().equals("walk")){
+        if (items.get(pos).getTravel_mode().equals("walk")){
             holder.tv_brand_name.setText(name);
-        }else{
+            holder.im_icon.setBackgroundResource(R.drawable.ic_baseline_directions_walk_24);
+        }
+        else{
             holder.tv_brand_name.setText(brand+": "+name);
+        }
+
+        if (items.get(pos).getVehicle_types().equals("metro")){
+            holder.im_icon.setBackgroundResource(R.drawable.ic_baseline_subway_24);
+        }
+        else if (items.get(pos).getVehicle_types().equals("bus")){
+            holder.im_icon.setBackgroundResource(R.drawable.ic_double_decker_24);
+        }
+        else if (items.get(pos).getVehicle_types().equals("ferry")){
+            holder.im_icon.setBackgroundResource(R.drawable.ic_baseline_directions_boat_24);
         }
 
         String duration_min = Integer.toString(Math.round(items.get(pos).getDuration_seconds()/60));
@@ -99,10 +112,12 @@ public class LegsAdaptor extends RecyclerView.Adapter<LegsAdaptor.LegsViewHolder
     public class LegsViewHolder extends RecyclerView.ViewHolder {
         TextView tv_num, tv_travel_mode_vehicle_types, tv_duration ,tv_brand_name;
         RecyclerView rv_child_stops;
+        ImageView im_icon;
 
         public LegsViewHolder(View itemview) {
             super(itemview);
 //            tv_num = itemview.findViewById(R.id.tv_num);
+            im_icon = itemview.findViewById(R.id.im_icon);
 
             tv_travel_mode_vehicle_types = itemview.findViewById(R.id.tv_travel_mode_vehicle_types);
 

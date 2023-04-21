@@ -97,8 +97,8 @@ public class NearbyTab extends Fragment implements OnMapReadyCallback, LocationL
         imgbt_getGPSStart= view.findViewById(R.id.imgbt_getGPSStart);
         imgbt_search = view.findViewById(R.id.imgbt_search);
 
-        String[] placeTypeList = {"atm", "bank", "hospital", "movie_theater", "restaurant"};
-        String[] placeNameList = {"ATM", "Bank", "Hospital", "Movie Theater", "Restaurant"};
+        String[] placeTypeList = {"atm", "bank", "hospital", "movie_theater", "restaurant","museum","shopping_mall","subway_station","tourist_attraction", "transit_station"};
+        String[] placeNameList = {"ATM", "Bank", "Hospital", "Movie Theater", "Restaurant", "Museum", "Shopping Mall", "Subway Station", "Tourist Attraction", "Transit Station"};
 
         spType.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, placeNameList));
 

@@ -18,44 +18,32 @@
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#158C52">
+                android:background="@color/emerald_green">
                 <TableRow>
-<!--                    <TextView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:padding="8dp"-->
-<!--                        android:text="1"-->
-<!--                        android:textSize="16dp"-->
-<!--                        android:layout_weight="0"-->
-<!--                        android:id="@+id/tv_num"/>-->
+                    <ImageView
+                        android:id="@+id/im_icon"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_margin="10dp"
+                        android:padding="10dp"
+                        android:backgroundTint="@color/white"
+                        android:background="@drawable/commute"/>
+
                     <TextView
                         android:id="@+id/tv_travel_mode_vehicle_types"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="#158C52"
                         android:textColor="@color/white"
                         android:padding="8dp"
                         android:textAlignment="textStart"
                         android:text="travel_mode vehicle_types"
                         android:layout_weight="3"
                         android:textSize="20dp"/>
-<!--                    <TextView-->
-<!--                        android:id="@+id/tv_vehicle_types"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:background="#158C52"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:padding="8dp"-->
-<!--                        android:text="vehicle_types"-->
-<!--                        android:layout_weight="3"-->
-<!--                        android:textSize="20dp"/>-->
 
                     <TextView
                         android:id="@+id/tv_duration"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="#158C52"
                         android:layout_gravity="right"
                         android:padding="8dp"
                         android:text="##"

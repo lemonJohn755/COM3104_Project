@@ -47,7 +47,7 @@
                     android:layout_marginBottom="2dp"
                     android:layout_margin="4dp"
                     android:layout_weight="19"
-                    android:hint="Location"/>
+                    android:hint="Search location here"/>
                 <ImageButton
                     android:id="@+id/imgbt_search"
                     android:layout_width="wrap_content"

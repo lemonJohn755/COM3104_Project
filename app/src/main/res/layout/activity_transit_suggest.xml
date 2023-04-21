@@ -63,6 +63,7 @@
                                 android:singleLine="false"
                                 android:text="Start address"
                                 android:textColor="@color/black"
+                                android:focusable="false"
                                 android:textSize="16dp" />
                         </TableRow>
 
@@ -83,6 +84,7 @@
                                 android:singleLine="false"
                                 android:text="Destination address"
                                 android:textColor="@color/black"
+                                android:focusable="false"
                                 android:textSize="16dp" />
                         </TableRow>
                     </TableLayout>
