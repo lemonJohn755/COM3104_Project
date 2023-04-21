@@ -410,7 +410,6 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
         stopCods.add(toloc);
 
         // Assign markers for all stops
-
         for(LegStop i: MarkersList){
             name = i.getName();
             codLat = i.getCodLat();
@@ -420,7 +419,8 @@ public class SuggestDetailActivity extends AppCompatActivity implements OnMapRea
             builder.include(new LatLng(codLat, codLon));
         }
 
-        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,900,900,50), 2000, null);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(
+                bounds,900,900,50), 2000, null);
 
 
     }

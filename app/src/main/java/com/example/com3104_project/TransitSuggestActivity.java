@@ -113,18 +113,14 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
             @Override
             public void onResponse(JSONObject response) {
 
-//                response = toUTF8(response);
-
                 Log.d("volley", "Response return:" + response);//display the response on screen
 
                     // Get value from json response
                 try {
                     // Parse the JSON string
-//                    JsonObject jsonObject = new Gson().fromJson(response, JsonObject.class);
                     JSONObject jsonObject = response;
 
                     // Extract the "routes" array
-//                    JsonArray routesArray = jsonObject.getAsJsonArray("routes");
                     JSONArray routesArray = jsonObject.getJSONArray("routes");
 
 //                    JsonObject routeObject;
@@ -132,14 +128,11 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
                     int durationSec = 0;
                     double distanceMeter = 0;
                     for (int i=0; i < routesArray.length(); i++){
-//                        routeObject = routesArray.get(i).getAsJsonObject();
                         routeObject = routesArray.getJSONObject(i);
-//                        durationSec = routeObject.get("duration_seconds").getAsInt();
                         durationSec = routeObject.getInt("duration_seconds");
 
                         Log.d("vRoute","Route "+ i+": "+routeObject.toString());
 
-//                        suggest = new Suggest("Route "+(i+1), durationSec, routeObject.toString());
                         suggestList.add(new Suggest("Route "+(i+1), durationSec, routeObject.toString()));
                     }
 
