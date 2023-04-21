@@ -24,47 +24,53 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="12dp">
-
-                <TableRow>
-                    <SearchView
-                        android:id="@+id/sv_search_bus"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:queryHint="Search bus route"
-                        android:iconifiedByDefault="false"/>
-                </TableRow>>
                 <TableRow>
                     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/rgp_busCompany"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:layout_margin="2dp"
+                        android:checkedButton="@+id/rbt_kmb">
 
                         <RadioButton
+                            android:id="@+id/rbt_kmb"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="KMB" />
 
                         <RadioButton
+                            android:id="@+id/rbt_ctb"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="CTB" />
 
                         <RadioButton
+                            android:id="@+id/rbt_nwfb"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="NWFB" />
 
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="NLB" />
+<!--                        <RadioButton-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:text="NLB" />-->
                     </RadioGroup>
                 </TableRow>
+                <TableRow>
+
+                    <SearchView
+                        android:id="@+id/sv_search_bus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:iconifiedByDefault="false"
+                        android:queryHint="Search bus route" />
+                </TableRow>>
             </TableLayout>
         </androidx.cardview.widget.CardView>
 

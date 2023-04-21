@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -35,6 +37,11 @@ public class BusSearchActivity extends AppCompatActivity implements BusRouteList
     List<Bus> bus_routes = new ArrayList<Bus>();     // ArrayList to store bus route obj
     BusAdaptor busAdaptor;
 
+    String company = "";
+
+    RadioGroup rgp_busCompany;
+    RadioButton rbt_kmb, rbt_ctb, rbt_nwfb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTitle("Bus search");
@@ -60,8 +67,32 @@ public class BusSearchActivity extends AppCompatActivity implements BusRouteList
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                filterList(newText);
+                filterList(newText,company);
                 return false;
+            }
+        });
+
+        rgp_busCompany = (RadioGroup) findViewById(R.id.rgp_busCompany);
+        rbt_kmb = findViewById(R.id.rbt_kmb);
+        rbt_ctb = findViewById(R.id.rbt_ctb);
+        rbt_nwfb = findViewById(R.id.rbt_nwfb);
+
+        rgp_busCompany.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (rbt_kmb.isChecked()){
+                    company = "kmb";
+                    filterList(sv_search_bus.getQuery().toString(), company);
+                }
+                else if (rbt_ctb.isChecked()){
+                    company = "ctb";
+                    filterList(sv_search_bus.getQuery().toString(), company);
+                }
+                else if (rbt_nwfb.isChecked()){
+                    company = "nwfb";
+                    filterList(sv_search_bus.getQuery().toString(), company);
+                }
+                filterList(sv_search_bus.getQuery().toString(), company);
             }
         });
 
@@ -73,11 +104,18 @@ public class BusSearchActivity extends AppCompatActivity implements BusRouteList
 
     }
 
-    public void filterList(String text) {
+    public void filterList(String bus_code, String company) {
         List<Bus> filteredList = new ArrayList<>();
 
         for(Bus bus : bus_routes){
-            if( bus.getRoute().toLowerCase(Locale.ROOT).contains(text.toLowerCase(Locale.ROOT))){
+            if( bus.getRoute().toLowerCase(Locale.ROOT).contains(bus_code.toLowerCase(Locale.ROOT))
+                    && !bus.getCompany().equals("")){
+
+                if ( bus.getCompany().toLowerCase().contains(company.toLowerCase())){
+                    filteredList.add(bus);
+                }
+
+            }else if (bus.getRoute().toLowerCase(Locale.ROOT).contains(bus_code.toLowerCase(Locale.ROOT))){
                 filteredList.add(bus);
             }
         }
