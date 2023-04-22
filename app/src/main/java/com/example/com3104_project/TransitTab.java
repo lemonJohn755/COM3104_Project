@@ -302,17 +302,29 @@ public class TransitTab extends Fragment implements OnMapReadyCallback, Location
             }
             Log.d("Network-GPS", "isNetworkEnabled: " + isNetworkEnabled);
             if (isNetworkEnabled) {
+
                 // get loc update
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                        MIN_TIME_BW_UPDATES,
-                        MIN_DISTANCE_CHANGE_FOR_UPDATES,
-                        (LocationListener) this);
-                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                            MIN_TIME_BW_UPDATES,
+                            MIN_DISTANCE_CHANGE_FOR_UPDATES,
+                            (LocationListener) this);
+                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    Toast.makeText(getContext(), "Get location from network provider", Toast.LENGTH_SHORT).show();
+                }else{
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                            MIN_TIME_BW_UPDATES,
+                            MIN_DISTANCE_CHANGE_FOR_UPDATES,
+                            (LocationListener) this);
+                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    Toast.makeText(getContext(), "Get location from GPS provider", Toast.LENGTH_SHORT).show();
+                }
+
                 if (location != null) {
                     fromLat = location.getLatitude();
                     fromLon = location.getLongitude();
-                    Log.d("location", "GPS Provider location obtained, lat " + fromLat + " lon " + fromLon);
-                    Toast.makeText(context, "GPS Provider location obtained", Toast.LENGTH_SHORT).show();
+                    Log.d("location", "location obtained, lat " + fromLat + " lon " + fromLon);
+//                    Toast.makeText(context, "GPS Provider location obtained", Toast.LENGTH_SHORT).show();
                 }
             }
         }

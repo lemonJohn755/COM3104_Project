@@ -292,11 +292,28 @@ public class NearbyTab extends Fragment implements OnMapReadyCallback, LocationL
             Log.d("Network-GPS", "isNetworkEnabled: " + isNetworkEnabled);
             if (isNetworkEnabled) {
                 // get loc update
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                        MIN_TIME_BW_UPDATES,
-                        MIN_DISTANCE_CHANGE_FOR_UPDATES,
-                        (LocationListener) this);
-                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+//                        MIN_TIME_BW_UPDATES,
+//                        MIN_DISTANCE_CHANGE_FOR_UPDATES,
+//                        (LocationListener) this);
+//                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+                if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                            MIN_TIME_BW_UPDATES,
+                            MIN_DISTANCE_CHANGE_FOR_UPDATES,
+                            (LocationListener) this);
+                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                }
+                // GPS not detected, use network find loc
+                else {
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                            MIN_TIME_BW_UPDATES,
+                            MIN_DISTANCE_CHANGE_FOR_UPDATES,
+                            (LocationListener) this);
+                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                }
+
                 if (location != null) {
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
