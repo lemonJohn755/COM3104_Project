@@ -85,6 +85,8 @@ public class TransitTab extends Fragment implements OnMapReadyCallback, Location
     String fromAddr = "";
     String toAddr = "";
 
+    private static final int EARTH_RADIUS = 6371000; // in meters
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -214,9 +216,12 @@ public class TransitTab extends Fragment implements OnMapReadyCallback, Location
             @Override
             public void onClick(View v) {
                 try {
-                    if (fromAddr.equals("") || toAddr.equals("")) {
+                    if (fromAddr.equals("") || toAddr.equals("")) {     // if start & dest fields are blank
                         Toast.makeText(context, "Please input the start and destination", Toast.LENGTH_SHORT).show();
-                    } else {
+                    }else if ( getDistance(fromLat, fromLon, toLat, toLon) < 10){ // if start & dest fields are too short, less than 10m
+                        Toast.makeText(context, "Distance too short between two points \nMinimum distance is 10m",Toast.LENGTH_SHORT).show();
+                    }
+                    else {
                         Log.d("startDestLoc", "From:" + fromAddr + ", To:" + toAddr +
                                 "\nfrom(lan,lon): " + fromLat + " ," + fromLon +
                                 "\nto(lan, lon):" + toLat + " ," + toLon);
@@ -239,6 +244,17 @@ public class TransitTab extends Fragment implements OnMapReadyCallback, Location
 
 
         return view;
+    }
+
+    private double getDistance(double startLat, double startLon, double endLat, double endLon) {
+
+        double dLat = Math.toRadians(endLat - startLat);
+        double dLon = Math.toRadians(endLon - startLon);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(Math.toRadians(startLat)) * Math.cos(Math.toRadians(endLat)) *
+                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return EARTH_RADIUS * c;
     }
 
     private void refreshMap() {

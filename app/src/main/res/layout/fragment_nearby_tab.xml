@@ -8,13 +8,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="4dp">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="280dp"
-            android:layout_margin="4dp">
+            android:layout_height="280dp">
 
             <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -35,82 +33,57 @@
                 android:src="@drawable/my_location" />
         </RelativeLayout>
 
-        <TableLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TableRow>
-                <EditText
-                    android:id="@+id/et_from"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TableRow>
+                    <EditText
+                        android:id="@+id/et_from"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="19"
+                        android:hint="Search location here"/>
+                    <ImageButton
+                        android:id="@+id/imgbt_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:contentDescription="Search start address"
+                        android:src="@drawable/search" />
+                </TableRow>
+                <TableLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="2dp"
-                    android:layout_margin="4dp"
-                    android:layout_weight="19"
-                    android:hint="Search location here"/>
-                <ImageButton
-                    android:id="@+id/imgbt_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:contentDescription="Search start address"
-                    android:src="@drawable/search" />
-            </TableRow>
-        </TableLayout>
+                    android:layout_height="wrap_content">
+                    <TableRow>
 
-<!--        <TableLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content">-->
-<!--            <TableRow>-->
-<!--                <Button-->
-<!--                    android:id="@+id/bt_getLoc"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:drawableRight="@drawable/ic_baseline_search_24"-->
-<!--                    android:drawableTint="#ffffff"-->
-<!--                    android:layout_gravity="right"-->
-<!--                    android:text="Search"-->
-<!--                    android:textStyle="normal"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:textSize="16dp"-->
-<!--                    android:layout_margin="4dp"/>-->
-<!--                <Button-->
-<!--                    android:id="@+id/bt_current"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:drawableRight="@drawable/ic_baseline_place_24"-->
-<!--                    android:drawableTint="#ffffff"-->
-<!--                    android:layout_gravity="right"-->
-<!--                    android:text="current"-->
-<!--                    android:textSize="16dp"-->
-<!--                    android:textStyle="normal"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:layout_margin="4dp"/>-->
-<!--            </TableRow>-->
-<!--        </TableLayout>-->
+                        <Spinner
+                            android:id="@+id/sp_type"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@android:drawable/editbox_background" />
+                        <Button
+                            android:id="@+id/bt_findNearby"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/ic_baseline_search_24"
+                            android:drawableTint="#ffffff"
+                            android:layout_gravity="right"
+                            android:text="Nearby"
+                            android:textStyle="normal" />
+                    </TableRow>
+                </TableLayout>
+            </TableLayout>
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TableRow>
-
-                <Spinner
-                    android:id="@+id/sp_type"
-                    android:layout_width="80dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@android:drawable/editbox_background" />
-                <Button
-                    android:id="@+id/bt_findNearby"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/ic_baseline_search_24"
-                    android:drawableTint="#ffffff"
-                    android:layout_gravity="right"
-                    android:text="Nearby"
-                    android:textStyle="normal" />
-            </TableRow>
-        </TableLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

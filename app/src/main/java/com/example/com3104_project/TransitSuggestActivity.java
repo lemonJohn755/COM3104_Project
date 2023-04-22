@@ -3,8 +3,12 @@ package com.example.com3104_project;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -64,6 +68,7 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
     List<Suggest> suggestList = new ArrayList<>();     // ArrayList to store bus route obj
     Suggest suggest;
 
+    View layout_message_box;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +100,8 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
         RecyclerView recyclerView = findViewById(R.id.rv_suggestion);
         recyclerView.setLayoutManager((new LinearLayoutManager(this)));
         recyclerView.setAdapter(suggestionAdaptor);
+
+        layout_message_box =  findViewById(R.id.layout_message_box);
 
     }
 
@@ -149,6 +156,14 @@ public class TransitSuggestActivity extends AppCompatActivity implements OnMapRe
             public void onErrorResponse(VolleyError error) {
                 Log.d("volley", "Error :" + error.toString());
                 Toast.makeText(TransitSuggestActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+
+                TextView tv_msg = new TextView(getApplicationContext());
+                tv_msg.setText("No results");
+                tv_msg.setGravity(Gravity.CENTER);
+                tv_msg.setTextSize(16);
+
+                ((LinearLayout)layout_message_box).addView(tv_msg);
+
             }
         }) {
             @Override
